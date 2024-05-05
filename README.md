@@ -4,41 +4,51 @@ This is the [Cinemo](https://github.com/Stephen0623/DWD_cw) project refactored w
 
 Cinemo is a movie recommendation website. Click 👉[here](https://xuechun.edinburgh.domains/cinemo-beta/) to visit.
 
-# UI Designs
+## UI Designs
 
-## Landing Page
+### Landing Page
 
 ![Landing Page](./designs/landingpage.png)
 
-## Homepage
+### Homepage
 
 ![Homepage](./designs/homepage.png)
 ![Login](./designs/login.png)
 ![Liked](./designs/liked-action.png)
 
-## Collections
+### Collections
 
 ![Collections](./designs/collections.png)
 ![Empty](./designs/empty.png)
 
-## Preferences
+### Preferences
 
 ![Preferences](./designs/preferences.png)
 ![Update](./designs/update-preferences.png)
 
-## Movie Details
+### Movie Details
 
 ![Movie Details](./designs/details.png)
 
-## Responsive Layout
+### Responsive Layout
 
 ![Responsive Layout](./designs/responsive-layout.png)
 
-# Public APIs
+## Public APIs
 
 TMDB API: [https://developer.themoviedb.org/docs/getting-started](https://developer.themoviedb.org/docs/getting-started)
 
-# Storage
+## Storage
 
 - MySQL
 - LocalStorage
+
+## Front-end
+
+### React
+
+TODO
+
+### TypeScript
+
+TODO
