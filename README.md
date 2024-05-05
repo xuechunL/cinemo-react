@@ -45,6 +45,8 @@ TMDB API: [https://developer.themoviedb.org/docs/getting-started](https://develo
 
 ## Front-end
 
+Using [Create React App](https://create-react-app.dev/docs/adding-typescript/) to set up the front-end codebase.
+
 ### React
 
 TODO
