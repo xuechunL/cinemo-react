@@ -41,6 +41,7 @@ TMDB API: [https://developer.themoviedb.org/docs/getting-started](https://develo
 ## Storage
 
 - MySQL
+- Firebase Cloud Store
 - LocalStorage
 
 ## Front-end
@@ -53,4 +54,22 @@ TODO
 
 ### TypeScript
 
-TODO
+TODO:
+
+### Styling
+
+- Tailwind.CSS
+- Styled-Components
+
+TODO:
+
+## Backend
+
+TODO:
+
+- Host with Firebase [docs](https://firebase.google.com/docs/auth/web/start)
+  - Firebase Authentication
+  - Cloud Store
+- CI/CD
+  - Netlify
+- Refactor with Next.js vs Separated Backend Frameworks (Node.js (Express) / Go / Java)
