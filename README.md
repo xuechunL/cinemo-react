@@ -50,7 +50,7 @@ Using [Create React App](https://create-react-app.dev/docs/adding-typescript/) t
 
 ### React
 
-TODO
+TODO:
 
 ### TypeScript
 
@@ -60,6 +60,10 @@ TODO:
 
 - Tailwind.CSS
 - Styled-Components
+
+TODO:
+
+### Testing
 
 TODO:
 
