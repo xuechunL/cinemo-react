@@ -256,4 +256,4 @@ graph TD
 
 - [ARIA](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA)
 - [WCAG Guidelines](https://developer.mozilla.org/en-US/docs/Web/Accessibility/Understanding_WCAG)
-- TMDB API: [https://developer.themoviedb.org/docs/getting-started](https://developer.themoviedb.org/docs/getting-started)
+- [TMDB API](https://developer.themoviedb.org/docs/getting-started)
