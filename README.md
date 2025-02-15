@@ -79,7 +79,7 @@ Component Architecture:
 ### Key Technologies
 
 - **Core:** Next.js (App Router), TypeScript
-- **State:** Zustand (global), React Query (server-state)
+- **State:** Zustand (global), TanStack Query (server-state)
 - **Styling:** Tailwind + `styled-components` for dynamic theming
 - **PWA:** `next-pwa` with runtime caching strategies
 
@@ -103,17 +103,17 @@ Component Architecture:
 - **Unit:** Jest + Testing Library
 - **E2E:** Cypress with auth state reuse
 - **Visual:** Percy snapshot testing
-- **Lighthouse:** CI-based performance audits and Automated a11y checks
+- **Lighthouse:** CI-based performance audits and automated a11y checks
 
 ### Future Work
 
-### Internationalization (i18n) Implementation
+### Internationalisation (i18n) Implementation
 
 **Key Technologies:**
 
 - `next-i18next` for SSR translations
 - `i18next-browser-languagedetector` for auto language detection
-- `date-fns` for localized date formatting
+- `date-fns` for localised date formatting
 - `react-intl` for number/currency formatting
 
 ## Data & Storage
@@ -143,9 +143,7 @@ users/${uid}
 
 ### External Data Integration
 
-Public APIs
-
-- TMDB API: [https://developer.themoviedb.org/docs/getting-started](https://developer.themoviedb.org/docs/getting-started)
+Public APIs:
 
 ```javascript
 // TMDB API Adapter
@@ -164,14 +162,14 @@ export const fetchTMDBMovie = async (id: string) => {
 
 ### Storage Solutions
 
-1. **Firestore:** User-generated content
+1. **Firestore:** User-generated content, such as user profile
 2. **Firebase Cloud Storage:** User avatars (with compression)
 3. **LocalStorage:** Session caching for offline use
 4. **CDN Cache:** TMDB images (via Netlify edge)
 
 ### Data Validation
 
-Zod
+Zod schema validation:
 
 ```typescript
 // Zod schema for Firestore documents
@@ -253,3 +251,9 @@ graph TD
 - Keyboard navigation checks
 - Color contrast validation (WCAG 2.1 AA)
 - ARIA landmarks verification
+
+## References
+
+- [ARIA](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA)
+- [WCAG Guidelines](https://developer.mozilla.org/en-US/docs/Web/Accessibility/Understanding_WCAG)
+- TMDB API: [https://developer.themoviedb.org/docs/getting-started](https://developer.themoviedb.org/docs/getting-started)
