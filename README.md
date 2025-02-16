@@ -1,8 +1,6 @@
 # cinemo-react
 
-This is the [Cinemo](https://github.com/Stephen0623/DWD_cw) project refactored with React.
-
-Cinemo is a movie recommendation website. Click 👉[here](https://xuechun.edinburgh.domains/cinemo-beta/) to visit.
+This project is an evolution of the original PHP-based [Cinemo](https://github.com/Stephen0623/DWD_cw) movie recommendation web app, refactored with a modern tech stack. Currently in development, the focus is on building a robust system design using React, server-side rendering (SSR), Progressive Web App (PWA) capabilities, and other cutting-edge technologies.
 
 ## UI Designs
 
@@ -52,14 +50,12 @@ graph TD;
 
 ```
 
-### Key Characteristics:
+### Key Characteristics
 
 - **Hybrid Rendering:** SSG for public pages, SSR for user-specific content
 - **Real-time Core:** Firestore listeners for collections/likes updates
 - **Decoupled Services:** Firebase for stateful services, Netlify for static hosting
 - **Progressive Enhancement:** PWA-first approach with network resilience
-
-------- Archive ---------
 
 ## UI & Frontend
 
@@ -107,7 +103,7 @@ Component Architecture:
 
 ### Future Work
 
-### Internationalisation (i18n) Implementation
+Internationalisation (i18n) Implementation:
 
 **Key Technologies:**
 
