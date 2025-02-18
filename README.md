@@ -39,11 +39,10 @@ graph TD;
     A[Next.js Client] -->|Firebase SDK| B[Firebase Auth]
     A -->|Firestore SDK| C[(Cloud Firestore)]
     A -->|Storage SDK| D[(Firebase Storage)]
-    A -->|API Calls| E[Netlify Functions]
+    A -->|Client-Side API Calls| E[Netlify Functions]
     E -->|Admin SDK| C
-    E -->|Auth Verification| B
-    C -->|Realtime Updates| A
-    B -->|Session Cookie| E
+    E -->|Token Verification| B
+    C -->|Realtime Listeners| A
     F[TMDB API] --> E
     G[Recommendation Service] --> E
     H[CDN] --> A
@@ -62,20 +61,53 @@ graph TD;
 Component Architecture:
 
 ```shell
-/src
-  /components      # Reusable UI (Button, MovieCard)
-  /features        # Feature modules (Likes, Preferences)
-  /layouts         # Page templates
-  /pages           # Next.js routing
-  /styles          # Tailwind config + global CSS
-  /hooks           # Custom hooks (useAuth, useLikes)
-
+/cinemo-ui
+├── app
+│   ├── (auth)              # Auth group layout
+│   │   └── signin/page.tsx # Sign-in UI
+│   │   └── signup/page.tsx # Sign-up UI
+│   │   └── layout.tsx      # Auth layout
+│   ├── home
+│   │   └── page.tsx        # Homepage
+│   ├── collections
+│   │   └── page.tsx        # Main collections page
+│   ├── preferences
+│   │   └── page.tsx        # Mood/Genre preferences
+│   ├── details
+│   │   └── [id]/page.tsx   # Movie details page
+│   └── layout.tsx          # Global nav (CINEMO/MyPrefs/Collections)
+├── components
+│   ├── ui                  # Reusable/Primitive components
+│   │   └── [Avatar/Button/Input/Modal/etc]
+│   ├── forms               # Forms
+│   │   ├── auth            # Auth Forms
+│   │   │   └── [SigninForm/SignupForm]
+│   │   ├── preferences     # Preferences Forms
+│   │   │   └── [GenreForm/MoodForm]
+│   │   └── hooks           # Custom form hooks
+│   ├── features            # Feature-specific components
+│   │   └── [MoodGrid/MovieCard/RatingBadge/etc] # Combines UI components + logic
+├── utils
+│   └── helpers.ts          # Utility functions
+│   └── ...
+├── hooks
+│   └── useAuth.tsx        # Authentication hook
+│   └── usePreferences.tsx # Preferences hook
+│   └── ...
+├── types
+│   └── tmdb.d.ts           # TMDB API types
+│   └── ...
+├── styles
+│   ├── global.css          # Global styles
+│   └── tailwind.config.ts  # Tailwind config
+├── public
+│   └── [favicon/manifest/etc]
 ```
 
 ### Key Technologies
 
 - **Core:** Next.js (App Router), TypeScript
-- **State:** Zustand (global), TanStack Query (server-state)
+- **State:** Zustand (global), TanStack Query (client-side data management, caching, and synchronization)
 - **Styling:** Tailwind + `styled-components` for dynamic theming
 - **PWA:** `next-pwa` with runtime caching strategies
 
