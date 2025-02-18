@@ -61,7 +61,7 @@ graph TD;
 Component Architecture:
 
 ```shell
-/cinemo-ui
+/cinemo
 ├── app
 │   ├── api
 │   │   └──[auth/collections/preferences/details]
@@ -75,7 +75,7 @@ Component Architecture:
 │   │   └── page.tsx        # Main collections page
 │   ├── preferences
 │   │   └── page.tsx        # Mood/Genre preferences
-│   ├── details
+│   ├── movie
 │   │   └── [id]/page.tsx   # Movie details page
 │   └── layout.tsx          # Global nav (CINEMO/MyPrefs/Collections)
 ├── components
@@ -104,6 +104,13 @@ Component Architecture:
 │   └── tailwind.config.ts  # Tailwind config
 ├── public
 │   └── [favicon/manifest/etc]
+├── lib
+│   └── firebase.ts            # Firebase client
+├── netlify
+│   └── functions
+│   │   └── recommendations.ts   # ML integration
+│   │   └── migration.ts         # Data import
+│   │   └── tmdb-proxy.ts        # API shielding
 ```
 
 ### Key Technologies
