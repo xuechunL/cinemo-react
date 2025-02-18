@@ -63,6 +63,8 @@ Component Architecture:
 ```shell
 /cinemo-ui
 ├── app
+│   ├── api
+│   │   └──[auth/collections/preferences/details]
 │   ├── (auth)              # Auth group layout
 │   │   └── signin/page.tsx # Sign-in UI
 │   │   └── signup/page.tsx # Sign-up UI
@@ -108,7 +110,7 @@ Component Architecture:
 
 - **Core:** Next.js (App Router), TypeScript
 - **State:** Zustand (global), TanStack Query (client-side data management, caching, and synchronization)
-- **Styling:** Tailwind + `styled-components` for dynamic theming
+- **Styling:** Tailwind for global styles, CSS Modules for custom components
 - **PWA:** `next-pwa` with runtime caching strategies
 
 ### Critical UI Flows
