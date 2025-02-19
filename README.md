@@ -93,8 +93,8 @@ Component Architecture:
 │   └── helpers.ts          # Utility functions
 │   └── ...
 ├── hooks
-│   └── useAuth.tsx        # Authentication hook
-│   └── usePreferences.tsx # Preferences hook
+│   └── useAuth.tsx         # Authentication hook
+│   └── usePreferences.tsx  # Preferences hook
 │   └── ...
 ├── types
 │   └── tmdb.d.ts           # TMDB API types
@@ -105,9 +105,9 @@ Component Architecture:
 ├── public
 │   └── [favicon/manifest/etc]
 ├── lib
-│   └── firebase.ts            # Firebase client
+│   └── firebase.ts         # Firebase client
 ├── netlify
-│   └── functions
+│   └── functions           # Netlify functions
 │   │   └── recommendations.ts   # ML integration
 │   │   └── migration.ts         # Data import
 │   │   └── tmdb-proxy.ts        # API shielding
