@@ -2,7 +2,7 @@
 'use client'
 
 import Image from 'next/image'
-import Avatar from '@components/ui/avatar'
+import Avatar from '@/components/ui/avatar'
 
 export default function Preferences() {
 	return (

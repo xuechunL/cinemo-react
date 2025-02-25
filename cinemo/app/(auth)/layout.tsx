@@ -1,15 +1,8 @@
+// TODO: fix http://localhost:3000/signup 500 (Internal Server Error) on refresh
 export default function AuthLayout({
 	children,
-}: {
+}: Readonly<{
 	children: React.ReactNode
-}) {
-	return (
-		<html lang="en">
-			<body>
-				{/* Layout UI */}
-				{/* Place children where you want to render a page or nested layout */}
-				<main>{children}</main>
-			</body>
-		</html>
-	)
+}>) {
+	return <section className={'auth-page'}>{children}</section>
 }

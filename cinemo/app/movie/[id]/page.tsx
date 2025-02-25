@@ -5,6 +5,7 @@ export default async function MovieDetails({
 }: {
 	params: { id: string }
 }) {
+	console.log(params)
 	return (
 		<div>
 			<h1>Movie: Interstellar</h1>
