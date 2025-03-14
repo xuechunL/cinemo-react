@@ -61,7 +61,7 @@ graph TD;
 Component Architecture:
 
 ```shell
-/cinemo
+/cinemo-react
 ├── app
 │   ├── api
 │   │   └──[auth/collections/preferences/details]
