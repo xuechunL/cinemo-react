@@ -36,7 +36,7 @@
     "typescript": "^5"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
+    "*.{js,jsx,ts,tsx,mjs}": [
       "prettier --write --ignore-unknown",
       "next lint --fix --file"
     ],
