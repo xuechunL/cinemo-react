@@ -152,13 +152,11 @@ graph TD
 ├── _mixins.scss           # Sass mixins
 /components/
 ├── MovieCard/
-│   ├── MovieCard.tsx      # Component logic
-│   ├── MovieCard.module.scss  # Component-specific styles
-│   └── index.ts           # Export file
+│   ├── index.tsx      # Component logic
+│   └── styles.module.scss  # Component-specific styles
 ├── Button/
-│   ├── Button.tsx
-│   ├── Button.module.scss
-│   └── index.ts
+│   ├── index.tsx
+│   └── styles.module.scss
 └── ...
 ```
 
