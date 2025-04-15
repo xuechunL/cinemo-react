@@ -1,0 +1,16 @@
+@import '@/styles/mixins';
+
+.avatar {
+  @include flex;
+  display: inline-block;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+}

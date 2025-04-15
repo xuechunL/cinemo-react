@@ -1,0 +1,94 @@
+// Flexbox mixins
+@mixin flex($direction: row, $justify: flex-start, $align: stretch) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify;
+  align-items: $align;
+}
+
+@mixin flex-center {
+  @include flex(row, center, center);
+}
+
+@mixin flex-between {
+  @include flex(row, space-between, center);
+}
+
+// Grid mixins
+@mixin grid($columns: 1, $gap: 1rem) {
+  display: grid;
+  grid-template-columns: repeat($columns, 1fr);
+  gap: $gap;
+}
+
+// Responsive mixins
+@mixin responsive($breakpoint) {
+  @if $breakpoint == sm {
+    @media (min-width: $breakpoint-sm) {
+      @content;
+    }
+  } @else if $breakpoint == md {
+    @media (min-width: $breakpoint-md) {
+      @content;
+    }
+  } @else if $breakpoint == lg {
+    @media (min-width: $breakpoint-lg) {
+      @content;
+    }
+  } @else if $breakpoint == xl {
+    @media (min-width: $breakpoint-xl) {
+      @content;
+    }
+  }
+}
+
+// Typography mixins
+@mixin heading-1 {
+  @apply text-4xl font-bold;
+  @include responsive(md) {
+    @apply text-5xl;
+  }
+}
+
+@mixin heading-2 {
+  @apply text-3xl font-bold;
+  @include responsive(md) {
+    @apply text-4xl;
+  }
+}
+
+// Animation mixins
+@mixin transition($properties...) {
+  $transitions: ();
+  @each $property in $properties {
+    $transitions: append($transitions, $property $transition-base, comma);
+  }
+  transition: $transitions;
+}
+
+// Card mixins
+@mixin card {
+  @apply p-4 rounded-lg shadow-md bg-white;
+  @include transition(transform, box-shadow);
+
+  &:hover {
+    @apply shadow-lg;
+    transform: translateY(-2px);
+  }
+}
+
+// Button mixins
+@mixin button-base {
+  @apply px-4 py-2 rounded-lg font-medium transition-colors;
+  @include transition(background-color, color);
+}
+
+@mixin button-primary {
+  @include button-base;
+  @apply bg-blue-500 text-white hover:bg-blue-600;
+}
+
+@mixin button-secondary {
+  @include button-base;
+  @apply bg-gray-200 text-gray-800 hover:bg-gray-300;
+}

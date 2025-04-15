@@ -1,0 +1,53 @@
+@import '@/styles/variables';
+@import '@/styles/mixins';
+
+.movieCard {
+  @include card;
+  @include flex(column);
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto;
+
+  &__image {
+    @apply w-full h-48 object-cover rounded-t-lg;
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+
+  &__content {
+    @apply p-4;
+  }
+
+  &__title {
+    @include heading-2;
+    @apply mt-2 mb-1;
+    color: $text-color;
+  }
+
+  &__description {
+    @apply text-gray-600 mt-1;
+    font-size: $font-size-base;
+    line-height: 1.5;
+  }
+
+  &__rating {
+    @apply flex items-center mt-2;
+
+    &Icon {
+      @apply text-yellow-400 mr-1;
+    }
+
+    &Value {
+      @apply font-medium;
+      color: $gray-dark;
+    }
+  }
+
+  &__actions {
+    @include flex-between;
+    @apply mt-4;
+  }
+}

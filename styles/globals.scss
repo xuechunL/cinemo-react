@@ -1,0 +1,74 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+// Custom variables
+:root {
+  --background: #ffffff;
+  --foreground: #000000;
+}
+
+// Custom mixins
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin responsive($breakpoint) {
+  @if $breakpoint == tablet {
+    @media (min-width: 768px) {
+      @content;
+    }
+  } @else if $breakpoint == desktop {
+    @media (min-width: 1024px) {
+      @content;
+    }
+  }
+}
+
+// Custom components using @apply
+@layer components {
+  .btn-primary {
+    @apply px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors;
+  }
+
+  .card {
+    @apply p-4 rounded-lg shadow-md bg-white;
+  }
+}
+
+// Custom utilities
+@layer utilities {
+  .text-shadow {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  }
+}
+
+// Global styles
+body {
+  @apply bg-background text-foreground;
+}
+
+// Custom Sass styles
+.movie-card {
+  @include flex-center;
+  flex-direction: column;
+
+  &__image {
+    @apply rounded-lg shadow-lg;
+    width: 100%;
+    height: auto;
+  }
+
+  &__title {
+    @apply text-xl font-bold mt-2;
+    @include responsive(tablet) {
+      font-size: 1.5rem;
+    }
+  }
+
+  &__description {
+    @apply text-gray-600 mt-1;
+  }
+}
