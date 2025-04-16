@@ -2,13 +2,39 @@
 @tailwind components;
 @tailwind utilities;
 
-// Custom variables
+// Custom variables for light and dark modes
+// light mode
 :root {
   --background: #ffffff;
   --foreground: #000000;
 }
 
-// Custom components using @apply
+// dark mode
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #000000;
+    --foreground: #ffffff;
+  }
+}
+
+// Global styles
+@layer base {
+  html,
+  body {
+    @apply bg-background text-foreground font-roboto;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-roboto-mono;
+  }
+}
+
+// Custom components using @apply to inject styles into the components
 @layer components {
   .btn-primary {
     @apply px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors;
@@ -19,14 +45,9 @@
   }
 }
 
-// Custom utilities
+// Custom utilities to inject styles into the utilities
 @layer utilities {
   .text-shadow {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
   }
-}
-
-// Global styles
-body {
-  @apply bg-background text-foreground;
 }

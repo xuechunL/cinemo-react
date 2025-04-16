@@ -36,7 +36,7 @@ export default function MovieRecommendations({
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {movies.map((movie) => (
           <div key={movie.id} className="bg-white p-4 rounded-lg shadow-md">
-            <h2 className="text-lg font-bold">{movie.title}</h2>
+            <h2 className="text-lg font-bold text-black">{movie.title}</h2>
             <p className="text-sm text-gray-600">{movie.overview}</p>
           </div>
         ))}
