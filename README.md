@@ -147,13 +147,13 @@ graph TD
 
 ```
 /styles/
-├── globals.scss           # Global styles and Tailwind imports
-├── _variables.scss        # Sass variables
-├── _mixins.scss           # Sass mixins
+├── globals.scss            # Global styles and Tailwind imports
+├── _variables.scss         # Sass variables
+├── _mixins.scss            # Sass mixins
 /components/
 ├── MovieCard/
-│   ├── index.tsx      # Component logic
-│   └── styles.module.scss  # Component-specific styles
+│   ├── index.tsx           # Component logic
+│   └── styles.module.scss  # Custom component-specific styles
 ├── Button/
 │   ├── index.tsx
 │   └── styles.module.scss
@@ -175,7 +175,6 @@ graph TD
    - Mixins for reusable patterns
    - Variables for theming
    - Mathematical operations
-   - BEM naming convention support
 
 3. **Tailwind CSS**
 
@@ -189,7 +188,7 @@ graph TD
    - Use CSS Modules for component-specific styles
    - Use Sass for complex styling patterns and organization
    - Use Tailwind for layout and utility classes
-   - Leverage Tailwind's @apply in Sass for consistency
+   - Use clsx for handling multiple class names in components
 
 ### Best Practices
 

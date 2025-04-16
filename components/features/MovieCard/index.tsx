@@ -23,8 +23,9 @@ export const MovieCard: React.FC<MovieCardProps> = ({
 }) => {
   console.log(id)
   return (
-    <div className={styles.movieCard}>
-      <div className={styles.movieCard__image}>
+    // TODO: Use clsx for handling multiple class names in components
+    <div className={`${styles.movieCard} flex flex-col card`}>
+      <div className="w-full h-48 object-cover rounded-t-lg">
         <Image
           src={image}
           alt={title}
@@ -34,18 +35,16 @@ export const MovieCard: React.FC<MovieCardProps> = ({
         />
       </div>
 
-      <div className={styles.movieCard__content}>
-        <h3 className={styles.movieCard__title}>{title}</h3>
-        <p className={styles.movieCard__description}>{description}</p>
+      <div className="p-4">
+        <h3 className="text-xl font-bold mt-2 mb-1">{title}</h3>
+        <p className="text-gray-600 mt-1">{description}</p>
 
-        <div className={styles.movieCard__rating}>
-          <span className={styles.movieCard__ratingIcon}>★</span>
-          <span className={styles.movieCard__ratingValue}>
-            {rating.toFixed(1)}
-          </span>
+        <div className="flex items-center">
+          <span className="text-yellow-500">★</span>
+          <span className="text-gray-600 ml-1">{rating.toFixed(1)}</span>
         </div>
 
-        <div className={styles.movieCard__actions}>
+        <div className="flex items-center">
           <button onClick={onLike} className="btn-primary">
             Like
           </button>

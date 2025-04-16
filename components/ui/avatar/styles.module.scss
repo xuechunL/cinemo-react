@@ -1,7 +1,4 @@
-@import '@/styles/mixins';
-
 .avatar {
-  @include flex;
   display: inline-block;
   width: 42px;
   height: 42px;
