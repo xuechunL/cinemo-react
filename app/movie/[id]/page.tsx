@@ -1,8 +1,8 @@
 // Dynamic Route:
 
-import { MovieCard } from '@/components/features/MovieCard'
+import { MovieCard } from '@/components/features/movie-card'
 
-// TODO get movie details by movieId from TMDB API in server component
+// TODO: get movie details by movieId from TMDB API in server component (Dynamic Route)
 export default async function MovieDetails({
   params,
 }: {

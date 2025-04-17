@@ -1,46 +1,53 @@
-'use client'
+import { Suspense } from 'react'
 
 import { Movie } from '@/types/movie'
-import { useEffect, useState } from 'react'
-import { fetchPersonalizedRecommendations } from './api/movies'
-import { onAuthStateChangedListener } from '@/lib/firebase'
-import { useAuthStore } from '@/stores/authStore'
+import { fetchDefaultRecommendations } from './api/movies'
+import MovieGrid from '@/components/features/movie-grid'
+import MovieCardSkeleton from '@/components/features/movie-grid/skeleton'
 
-export default function MovieRecommendations({
-  initialMovies,
-}: {
-  initialMovies: Movie[]
-}) {
-  const [movies, setMovies] = useState(initialMovies)
-  const { user, setUser } = useAuthStore()
+// FIXME: getAuthenticatedUser is not working
+function getAuthenticatedUser() {
+  return null
+}
 
-  // TODO: move this to a custom hook for auth state changes
-  useEffect(() => {
-    const unsubscribe = onAuthStateChangedListener((user) => {
-      setUser(user) // updates the user state in the auth store
-    })
+async function MovieRecommendationsList() {
+  // TODO: verify authenticated user on the server-side
+  const user = getAuthenticatedUser()
+  let movies: Movie[] = []
 
-    return unsubscribe
-  }, [setUser])
+  if (user) {
+    // TODO: Get personalized recommendations for authenticated users by user id
+    // movies = await fetchPersonalizedRecommendations(user.uid)
+  } else {
+    // Fetch general recommendations for non-authenticated users
+    // You might want to implement this function in your API
+    movies = await fetchDefaultRecommendations()
+  }
 
-  // fetch personalized recommendations when the user is authenticated
-  useEffect(() => {
-    if (user) {
-      fetchPersonalizedRecommendations(user.uid).then(setMovies)
-    }
-  }, [user])
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      {movies.map((movie) => (
+        <MovieGrid key={movie.id} movie={movie} />
+      ))}
+    </div>
+  )
+}
 
+export default function MovieRecommendations() {
   return (
     <div className="flex flex-col gap-4 p-4">
       <h1 className="text-2xl font-bold">Recommendations</h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {movies.map((movie) => (
-          <div key={movie.id} className="bg-white p-4 rounded-lg shadow-md">
-            <h2 className="text-lg font-bold text-black">{movie.title}</h2>
-            <p className="text-sm text-gray-600">{movie.overview}</p>
+      <Suspense
+        fallback={
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {[...Array(8)].map((_, i) => (
+              <MovieCardSkeleton key={i} />
+            ))}
           </div>
-        ))}
-      </div>
+        }
+      >
+        <MovieRecommendationsList />
+      </Suspense>
     </div>
   )
 }

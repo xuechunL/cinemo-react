@@ -1,5 +1,4 @@
 // app/preferences/page.tsx
-'use client'
 
 import Image from 'next/image'
 import Avatar from '@/components/ui/avatar'
