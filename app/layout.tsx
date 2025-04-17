@@ -20,8 +20,44 @@ export const robotoMono = Roboto_Mono({
 })
 
 export const metadata: Metadata = {
-  title: 'CINEMO',
-  description: 'CINEMO',
+  // Basic Metadata
+  title: {
+    // FIXME: add a dynamic title
+    template: '%s | Cinemo', // template for dynamic title
+    default: 'Cinemo - Your Favorite Movies, Right Here!',
+  },
+  description:
+    'Experience movies that match your mood. Whether you are seeking joy, adventure, reflection, or comfort, Cinemo helps you discover films that resonate with your emotional journey. Create personal collections, share meaningful moments, and find your next favorite story.',
+  keywords: [
+    'mood-based movies',
+    'emotional films',
+    'personal movie recommendations',
+    'feel-good movies',
+    'movie moods',
+    'cinematic experience',
+    'emotional storytelling',
+    'movie discovery',
+    'film emotions',
+    'personal cinema journey',
+  ],
+
+  // Authorship and Publishing
+  authors: [{ name: 'Rayna Lei' }],
+  creator: 'Rayna Lei',
+  publisher: 'Rayna Lei',
+
+  // Search Engine Directives
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
 }
 
 export default function RootLayout({
