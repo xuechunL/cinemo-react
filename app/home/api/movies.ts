@@ -1,24 +1,26 @@
 import { Movie } from '@/types/movie'
+import { GET } from '@/app/api/tmdb/route'
 
 // TODO: Movie type aligns with the TMDB API response
-export async function fetchDefaultRecommendations(): Promise<Movie[]> {
-  const res = await fetch('https://api.themoviedb.org/3/trending/movie/week', {
-    headers: {
-      Authorization: `Bearer ${process.env.TMDB_API_TOKEN}`,
-    },
-  })
 
+// Fetch default recommendations for non-authenticated users with TMDB API
+export async function fetchDefaultRecommendations(): Promise<Movie[]> {
+  const res = await GET({ url: 'trending/movie/week' })
   const data = await res.json()
 
   return data.results
 }
 
 // TODO: Fetch personalized recommendations by user id
+// Implement with TMDB API and recommendation algorithm (e.g. collaborative filtering) in the future
+// now just return popular movies in TMDB API
 export async function fetchPersonalizedRecommendations(
   userId: string
 ): Promise<Movie[]> {
   console.log(userId)
-  const movies = await fetchDefaultRecommendations()
+  // equal to 'discover/movie' in TMDB API
+  const res = await GET({ url: 'movie/popular' })
+  const data = await res.json()
 
-  return movies
+  return data.results
 }

@@ -1,33 +1,37 @@
 import { Suspense } from 'react'
 
 import { Movie } from '@/types/movie'
-import { fetchDefaultRecommendations } from './api/movies'
+import {
+  fetchDefaultRecommendations,
+  fetchPersonalizedRecommendations,
+} from './api/movies'
 import MovieGrid from '@/components/features/movie-grid'
 import MovieCardSkeleton from '@/components/features/movie-grid/skeleton'
+import Link from 'next/link'
 
-// FIXME: getAuthenticatedUser is not working
-function getAuthenticatedUser() {
-  return null
-}
-
+// Server component
 async function MovieRecommendationsList() {
   // TODO: verify authenticated user on the server-side
-  const user = getAuthenticatedUser()
+  const user = {
+    uid: '123',
+  }
+
   let movies: Movie[] = []
 
   if (user) {
     // TODO: Get personalized recommendations for authenticated users by user id
-    // movies = await fetchPersonalizedRecommendations(user.uid)
+    movies = await fetchPersonalizedRecommendations(user.uid)
   } else {
     // Fetch general recommendations for non-authenticated users
-    // You might want to implement this function in your API
     movies = await fetchDefaultRecommendations()
   }
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
       {movies.map((movie) => (
-        <MovieGrid key={movie.id} movie={movie} />
+        <Link href={`/movie/${movie.id}`} key={movie.id}>
+          <MovieGrid movie={movie} />
+        </Link>
       ))}
     </div>
   )
@@ -46,6 +50,7 @@ export default function MovieRecommendations() {
           </div>
         }
       >
+        {/* Server component */}
         <MovieRecommendationsList />
       </Suspense>
     </div>
