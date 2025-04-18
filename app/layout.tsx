@@ -4,7 +4,7 @@ import { Roboto, Roboto_Mono } from 'next/font/google'
 import '@/styles/globals.scss'
 
 // Roboto font will be applied to the body text (base styles)
-export const roboto = Roboto({
+const roboto = Roboto({
   variable: '--font-roboto', // create a custom CSS variable for the font
   subsets: ['latin'],
   display: 'swap',
@@ -12,7 +12,7 @@ export const roboto = Roboto({
 })
 
 // Roboto Mono font can be imported and applied as needed (title and code blocks)
-export const robotoMono = Roboto_Mono({
+const robotoMono = Roboto_Mono({
   variable: '--font-roboto-mono', // create a custom CSS variable for the font
   subsets: ['latin'],
   display: 'swap',

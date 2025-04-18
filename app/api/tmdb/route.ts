@@ -1,24 +1,16 @@
 // API implementation for interacting with TMDB APIs about movies
+import { NextRequest, NextResponse } from 'next/server'
 
-import { NextResponse } from 'next/server'
+export async function GET(request: NextRequest) {
+  const url = request.url
 
-type GetRequest = {
-  url: string
-  // TODO: Add query params to the request, e.g. ?page=1&sort_by=popularity.desc&include_adult=false&include_video=false&with_genres=28&with_watch_monetization_types=flatrate
-  options?: {
-    queryParams?: Record<string, string>
-  }
-}
-
-const baseUrl = 'https://api.themoviedb.org/3'
-
-export async function GET({ url }: GetRequest) {
   if (!url) {
     return NextResponse.json({ error: 'Url is required' }, { status: 400 })
   }
 
   try {
-    const response = await fetch(`${baseUrl}/${url}`, {
+    const response = await fetch(url, {
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${process.env.TMDB_API_TOKEN}`,

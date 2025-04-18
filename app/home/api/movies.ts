@@ -1,11 +1,13 @@
 import { Movie } from '@/types/movie'
 import { GET } from '@/app/api/tmdb/route'
-
+import { NextRequest } from 'next/server'
 // TODO: Movie type aligns with the TMDB API response
+
+const baseUrl = 'https://api.themoviedb.org/3'
 
 // Fetch default recommendations for non-authenticated users with TMDB API
 export async function fetchDefaultRecommendations(): Promise<Movie[]> {
-  const res = await GET({ url: 'trending/movie/week' })
+  const res = await GET(new NextRequest(`${baseUrl}/trending/movie/week`))
   const data = await res.json()
 
   return data.results
@@ -19,7 +21,7 @@ export async function fetchPersonalizedRecommendations(
 ): Promise<Movie[]> {
   console.log(userId)
   // equal to 'discover/movie' in TMDB API
-  const res = await GET({ url: 'movie/popular' })
+  const res = await GET(new NextRequest(`${baseUrl}/movie/popular`))
   const data = await res.json()
 
   return data.results

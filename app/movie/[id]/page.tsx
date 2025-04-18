@@ -3,6 +3,7 @@
 import { GET } from '@/app/api/tmdb/route'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
+import { NextRequest } from 'next/server'
 
 export default async function MoviePage({
   params,
@@ -13,7 +14,9 @@ export default async function MoviePage({
   const id = (await params).id
 
   try {
-    const res = await GET({ url: `movie/${id}` })
+    const res = await GET(
+      new NextRequest(`https://api.themoviedb.org/3/movie/${id}`)
+    )
 
     if (!res.ok) {
       // with notFound(), the page will be redirected to the 404 page (app/movie/[id]/not-found.tsx)
