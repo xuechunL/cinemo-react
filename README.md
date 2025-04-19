@@ -2,6 +2,8 @@
 
 This project is an evolution of the original PHP-based [Cinemo](https://github.com/Stephen0623/DWD_cw) movie recommendation web app, refactored with a modern tech stack. Currently in development, the focus is on building a robust system design using React, server-side rendering (SSR), Progressive Web App (PWA) capabilities, and other cutting-edge technologies.
 
+Visit the [live demo](https://cinemo-react.vercel.app) to explore the application. Please note that this is still a work in progress with ongoing development and improvements.
+
 ## UI Designs
 
 ### Landing Page
