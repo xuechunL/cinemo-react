@@ -114,7 +114,9 @@ export default async function MoviePage({
 
               {/* Movie details */}
               <div className="md:col-span-2">
-                <h2 className="text-2xl font-bold mb-4">Overview</h2>
+                <h2 className="text-2xl font-bold mb-4 dark:text-white">
+                  Overview
+                </h2>
                 <p className="text-gray-700 dark:text-gray-300 mb-6">
                   {overview}
                 </p>

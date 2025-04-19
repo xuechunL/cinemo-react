@@ -26,6 +26,7 @@ export async function fetchFromTMDB<T>(
 
   const response = await fetch(url, {
     headers: {
+      'Content-Type': 'application/json',
       Authorization: `Bearer ${process.env.TMDB_API_TOKEN}`,
     },
   })
