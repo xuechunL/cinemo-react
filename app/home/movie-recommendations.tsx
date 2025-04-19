@@ -1,35 +1,34 @@
 import { Suspense } from 'react'
-
-import { Movie } from '@/types/movie'
-import {
-  fetchDefaultRecommendations,
-  fetchPersonalizedRecommendations,
-} from './api/movies'
 import MovieGrid from '@/components/features/movie-grid'
 import MovieCardSkeleton from '@/components/features/movie-grid/skeleton'
 import Link from 'next/link'
+import { Movie } from '@/types/movie'
 
 // Server component
 async function MovieRecommendationsList() {
-  // TODO: verify authenticated user on the server-side
-  const user = {
-    uid: '123',
+  // Fetch recommendations from the API route (via GET request),
+  // the server will fetch the recommendations based on the user's id
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/movies/recommendations`,
+    {
+      // Use cache: 'no-store' to ensure we get fresh data on each request
+      // This is important since we're using random values in the API
+      cache: 'no-store',
+    }
+  )
+
+  // TODO: handle error properly
+  if (!response.ok) {
+    throw new Error('Failed to fetch movie recommendations')
   }
 
-  let movies: Movie[] = []
-
-  if (user) {
-    // TODO: Get personalized recommendations for authenticated users by user id
-    movies = await fetchPersonalizedRecommendations(user.uid)
-  } else {
-    // Fetch general recommendations for non-authenticated users
-    movies = await fetchDefaultRecommendations()
-  }
+  const data = await response.json()
+  const movies = data.movies as Movie[]
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
       {movies.map((movie) => (
-        <Link href={`/movie/${movie.id}`} key={movie.id}>
+        <Link href={`/movie/${movie.id}`} key={`movie-${movie.id}`}>
           <MovieGrid movie={movie} />
         </Link>
       ))}
@@ -45,7 +44,7 @@ export default function MovieRecommendations() {
         fallback={
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {[...Array(8)].map((_, i) => (
-              <MovieCardSkeleton key={i} />
+              <MovieCardSkeleton key={`skeleton-${i}`} />
             ))}
           </div>
         }

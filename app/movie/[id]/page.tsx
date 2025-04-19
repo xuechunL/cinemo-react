@@ -1,9 +1,7 @@
 // Dynamic Route:
 
-import { GET } from '@/app/api/tmdb/route'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
-import { NextRequest } from 'next/server'
 
 export default async function MoviePage({
   params,
@@ -14,8 +12,12 @@ export default async function MoviePage({
   const id = (await params).id
 
   try {
-    const res = await GET(
-      new NextRequest(`https://api.themoviedb.org/3/movie/${id}`)
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/movies/${id}`,
+      {
+        // Add cache: 'no-store' if you want to disable caching
+        // cache: 'no-store',
+      }
     )
 
     if (!res.ok) {
