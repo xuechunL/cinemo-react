@@ -5,7 +5,7 @@ import Avatar from '@/components/ui/avatar'
 
 export default function Preferences() {
   return (
-    <div>
+    <div className="flex flex-col gap-6">
       <Avatar>
         <Image
           src="https://github.com/shadcn.png"

@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
 import { Roboto, Roboto_Mono } from 'next/font/google'
+import Image from 'next/image'
+import Link from 'next/link'
 
 import '@/styles/globals.scss'
 
@@ -68,8 +70,83 @@ export default function RootLayout({
   return (
     <html lang="en">
       {/* inject custom font variables for global styles */}
-      <body className={`${roboto.variable} ${robotoMono.variable} antialiased`}>
-        {children}
+      <body
+        className={`${roboto.variable} ${robotoMono.variable} antialiased flex flex-col min-h-screen`}
+      >
+        {/* TODO: use a header component for user authentication in the future (e.g. user profile dropdown for sign in/out) */}
+        <header className="bg-black text-white py-6">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <nav className="flex justify-between items-center">
+              <Link href="/" className="flex items-center">
+                <Image
+                  src="/logo.svg"
+                  alt="Cinemo Logo"
+                  width={120}
+                  height={40}
+                  priority
+                />
+              </Link>
+
+              <div className="flex items-center space-x-8">
+                <Link
+                  href="/preferences"
+                  className="text-sm font-medium hover:text-gray-300 transition-colors"
+                >
+                  MY PREFERENCES
+                </Link>
+                <Link
+                  href="/collections"
+                  className="text-sm font-medium hover:text-gray-300 transition-colors"
+                >
+                  COLLECTIONS
+                </Link>
+              </div>
+            </nav>
+          </div>
+        </header>
+
+        <main className="flex-grow w-full mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          {children}
+        </main>
+
+        <footer className="py-6">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex flex-col justify-center items-center">
+              <div className="mb-4">
+                <p className="text-sm text-gray-600 dark:text-gray-400">
+                  © {new Date().getFullYear()} Cinemo. All rights reserved.
+                </p>
+              </div>
+
+              <div className="flex items-center">
+                <p className="text-sm text-gray-600 dark:text-gray-400 mr-2">
+                  Powered by
+                </p>
+                <a
+                  href="https://www.themoviedb.org/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center"
+                >
+                  <Image
+                    src="/tmdb-logo.svg"
+                    alt="TMDB Logo"
+                    width={80}
+                    height={24}
+                    className="h-6 w-auto"
+                  />
+                </a>
+              </div>
+            </div>
+
+            <div className="mt-4 text-xs text-gray-500 dark:text-gray-500 text-center">
+              <p>
+                This product uses the TMDB API but is not endorsed or certified
+                by TMDB.
+              </p>
+            </div>
+          </div>
+        </footer>
       </body>
     </html>
   )
