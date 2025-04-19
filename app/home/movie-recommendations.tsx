@@ -11,7 +11,7 @@ async function MovieRecommendationsList() {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/movies/recommendations`,
     {
-      // Use cache: 'no-store' to ensure we get fresh data on each request
+      // Use cache: 'no-store' to ensure we get fresh data on each request - SSR
       // This is important since we're using random values in the API
       cache: 'no-store',
     }

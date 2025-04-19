@@ -9,8 +9,7 @@ async function fetchMovieData(id: string) {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/movies/${id}`,
     {
-      next: { revalidate: 3600 }, // Revalidate every hour
-      // and using default cache strategy by nextjs
+      next: { revalidate: 3600 }, // Revalidate every hour - ISR
     }
   )
 

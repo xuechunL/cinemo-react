@@ -76,14 +76,16 @@ export default function RootLayout({
         {/* TODO: use a header component for user authentication in the future (e.g. user profile dropdown for sign in/out) */}
         <header className="bg-black text-white py-6">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <nav className="flex justify-between items-center">
+            <nav className="flex flex-col sm:flex-row gap-4 sm:gap-0 justify-between items-center">
               <Link href="/" className="flex items-center">
                 <Image
                   src="/logo.svg"
                   alt="Cinemo Logo"
-                  width={120}
+                  width={204}
                   height={40}
                   priority
+                  className="w-36 sm:w-auto h-auto"
+                  sizes="(max-width: 768px) 144px, 204px"
                 />
               </Link>
 
