@@ -11,13 +11,11 @@ export default function MovieGrid({ movie }: MovieGridProps) {
     <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md transition-transform hover:scale-105">
       {movie.poster_path && (
         <div className="relative aspect-[2/3] mb-3">
-          {/* https://nextjs.org/docs/pages/api-reference/components/image */}
+          {/* Responsive image using Next.js Image component */}
           <Image
             src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
             alt={movie.title}
             fill
-            // https://nextjs.org/docs/pages/api-reference/components/image#priority
-            priority
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             className="rounded-md object-cover"
           />

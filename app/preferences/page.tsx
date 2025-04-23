@@ -12,7 +12,6 @@ export default function Preferences() {
           alt="Avatar"
           width={42}
           height={42}
-          loading="lazy"
         />
       </Avatar>
       <h1 className="text-2xl font-bold">Hi, there!</h1>

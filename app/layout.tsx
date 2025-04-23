@@ -84,10 +84,10 @@ export default function RootLayout({
                   alt="Cinemo Logo"
                   width={204}
                   height={40}
+                  // ensure the logo is always visible
                   // https://nextjs.org/docs/pages/api-reference/components/image#priority
                   priority
-                  className="w-36 sm:w-auto h-auto"
-                  sizes="(max-width: 768px) 144px, 204px"
+                  className="w-36 h-auto sm:w-auto"
                 />
               </Link>
 
@@ -127,7 +127,6 @@ export default function RootLayout({
                     alt="TMDB Logo"
                     width={56}
                     height={24}
-                    loading="lazy"
                   />
                 </a>
               </div>

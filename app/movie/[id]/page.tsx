@@ -105,6 +105,7 @@ export default async function MoviePage({
             src={`https://image.tmdb.org/t/p/original${backdrop_path}`}
             alt={`${title} backdrop`}
             fill
+            // ensure the image as background is always visible
             priority
             // https://nextjs.org/docs/pages/api-reference/components/image#sizes
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -155,9 +156,9 @@ export default async function MoviePage({
                     src={`https://image.tmdb.org/t/p/w500${poster_path}`}
                     alt={title}
                     fill
-                    priority
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     className="object-cover"
+                    // use lazy loading for the poster image by default
                   />
                 ) : (
                   <div className="w-full h-full bg-gray-800" />
