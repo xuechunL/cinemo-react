@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Roboto, Roboto_Mono } from 'next/font/google'
 import Image from 'next/image'
 import Link from 'next/link'
+import NavLink from '@/components/features/layout/nav-link'
 
 import '@/styles/globals.scss'
 
@@ -83,6 +84,7 @@ export default function RootLayout({
                   alt="Cinemo Logo"
                   width={204}
                   height={40}
+                  // https://nextjs.org/docs/pages/api-reference/components/image#priority
                   priority
                   className="w-36 sm:w-auto h-auto"
                   sizes="(max-width: 768px) 144px, 204px"
@@ -90,18 +92,8 @@ export default function RootLayout({
               </Link>
 
               <div className="flex items-center space-x-8">
-                <Link
-                  href="/preferences"
-                  className="text-sm font-medium hover:text-gray-300 transition-colors"
-                >
-                  MY PREFERENCES
-                </Link>
-                <Link
-                  href="/collections"
-                  className="text-sm font-medium hover:text-gray-300 transition-colors"
-                >
-                  COLLECTIONS
-                </Link>
+                <NavLink href="/preferences">MY PREFERENCES</NavLink>
+                <NavLink href="/collections">COLLECTIONS</NavLink>
               </div>
             </nav>
           </div>
@@ -133,9 +125,9 @@ export default function RootLayout({
                   <Image
                     src="/tmdb-logo.svg"
                     alt="TMDB Logo"
-                    width={80}
+                    width={56}
                     height={24}
-                    className="h-6 w-auto"
+                    loading="lazy"
                   />
                 </a>
               </div>
