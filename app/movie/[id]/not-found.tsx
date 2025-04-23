@@ -4,6 +4,8 @@ import Image from 'next/image'
 export default function MovieNotFound() {
   return (
     <div className="flex flex-col items-center justify-center min-h-[70vh] px-4 text-center">
+      <h1 className="text-2xl font-bold mb-4">Oops, Movie Not Found!</h1>
+
       <div className="relative w-64 h-64 mb-8">
         <Image
           src="/images/movie-not-found.svg"
@@ -14,7 +16,6 @@ export default function MovieNotFound() {
         />
       </div>
 
-      <h1 className="text-3xl font-bold mb-4">Movie Not Found</h1>
       <p className="text-gray-600 dark:text-gray-400 mb-8 max-w-md">
         We couldn&apos;t find the movie you&apos;re looking for. It might have
         been removed or the ID might be incorrect.
