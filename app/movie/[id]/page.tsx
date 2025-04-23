@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import { Metadata } from 'next'
+import Link from 'next/link'
 
 // Shared function to fetch movie data
 async function fetchMovieData(id: string) {
@@ -89,6 +90,10 @@ export default async function MoviePage({
     vote_average,
     runtime,
     genres,
+    spoken_languages,
+    tagline,
+    credits,
+    similar,
   } = movie
 
   return (
@@ -161,15 +166,74 @@ export default async function MoviePage({
             </div>
 
             {/* Movie details */}
-            <div className="md:col-span-2">
+            <div className="md:col-span-2 flex flex-col gap-4">
+              {/* TODO: Add to collection button */}
               <h2 className="text-2xl font-bold mb-4 dark:text-white">
                 Overview
               </h2>
-              <p className="text-gray-700 dark:text-gray-300 mb-6">
+
+              <p className="italic text-lg text-gray-700 dark:text-gray-300 mb-4">
+                &quot;{tagline}&quot;
+              </p>
+
+              <div className="flex gap-2">
+                <span className="font-bold uppercase">Language: </span>
+                <span>
+                  {spoken_languages
+                    .map((language: { name: string }) => language.name)
+                    .join(', ')}
+                </span>
+              </div>
+
+              <div className="flex gap-2">
+                <span className="font-bold uppercase">Director: </span>
+                <span>
+                  {
+                    credits?.crew?.find(
+                      (crew: { job: string }) => crew.job === 'Director'
+                    )?.name
+                  }
+                </span>
+              </div>
+
+              <div className="flex gap-2">
+                <span className="font-bold uppercase">Cast: </span>
+                <span>
+                  {credits?.cast
+                    ?.slice(0, 5)
+                    .map((actor: { name: string }) => actor.name)
+                    .join(', ')}
+                </span>
+              </div>
+
+              <p className="text-gray-700 dark:text-gray-300 mt-4 mb-6">
                 {overview}
               </p>
 
               {/* Additional movie details can go here */}
+              <div className="gap-2">
+                <h3 className="text-xl font-bold mb-4 dark:text-white">
+                  Similar Movies
+                </h3>
+                {/* TODO: add link card component here */}
+                <ul className="list-disc list-inside">
+                  {similar?.results
+                    ?.slice(0, 5)
+                    .map((movie: { id: string; title: string }) => (
+                      <li
+                        className="text-gray-700 dark:text-gray-300"
+                        key={movie.id}
+                      >
+                        <Link
+                          className="hover:text-gray-900 dark:hover:text-gray-100 hover:underline"
+                          href={`/movie/${movie.id}`}
+                        >
+                          {movie.title}
+                        </Link>
+                      </li>
+                    ))}
+                </ul>
+              </div>
             </div>
           </div>
         </div>
