@@ -120,6 +120,7 @@ async function fetchDefaultRecommendations(): Promise<Movie[]> {
 }
 
 // Fetch personalized recommendations by user id
+// TODO: Using AI powered recommendations system in the future
 async function fetchPersonalizedRecommendations(
   userId: string
 ): Promise<Movie[]> {

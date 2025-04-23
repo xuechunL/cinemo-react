@@ -47,6 +47,8 @@ export default function MovieRecommendations() {
         </div>
       }
     >
+      {/* TODO: add dislike and load more button here */}
+
       {/* Server component */}
       <MovieRecommendationsList />
     </Suspense>
