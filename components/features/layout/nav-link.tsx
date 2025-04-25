@@ -16,7 +16,9 @@ export default function NavLink({ href, children }: NavLinkProps) {
     <Link
       href={href}
       className={`text-sm font-medium transition-colors ${
-        isActive ? 'text-white' : 'text-gray-400 hover:text-gray-300'
+        isActive
+          ? 'text-foreground font-bold'
+          : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
       }`}
     >
       {children}

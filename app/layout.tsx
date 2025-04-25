@@ -75,7 +75,7 @@ export default function RootLayout({
         className={`${roboto.variable} ${robotoMono.variable} antialiased flex flex-col min-h-screen`}
       >
         {/* TODO: use a header component for user authentication in the future (e.g. user profile dropdown for sign in/out) */}
-        <header className="bg-black text-white py-6">
+        <header className="py-6">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <nav className="flex flex-col sm:flex-row gap-4 sm:gap-0 justify-between items-center">
               <Link href="/" className="flex items-center">

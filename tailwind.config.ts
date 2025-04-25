@@ -14,6 +14,9 @@ export default {
         'roboto-mono': ['var(--font-roboto-mono)'],
       },
       colors: {
+        primary: {
+          500: '#3b82f6',
+        },
         background: 'var(--background)',
         foreground: 'var(--foreground)',
         // custom colors

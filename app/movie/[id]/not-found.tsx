@@ -24,7 +24,7 @@ export default function MovieNotFound() {
       <div className="flex flex-col sm:flex-row gap-4">
         <Link
           href="/"
-          className="px-6 py-3 bg-primary text-white rounded-lg font-medium hover:bg-primary/90 transition-colors"
+          className="px-6 py-3 bg-primary-500 text-white rounded-lg font-medium hover:bg-primary-600 transition-colors"
         >
           Return Home
         </Link>
