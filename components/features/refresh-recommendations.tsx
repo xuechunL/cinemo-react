@@ -27,7 +27,7 @@ export default function RefreshRecommendations() {
         height={20}
         className="invert-0 dark:invert"
       />
-      Get New Movies
+      Shuffle Movies
     </button>
   )
 }

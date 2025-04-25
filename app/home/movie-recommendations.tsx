@@ -29,17 +29,17 @@ async function MovieRecommendationsList() {
 
   return (
     <div className="flex flex-col gap-6">
+      <div className="flex justify-center">
+        {/* Client component to refresh recommendations */}
+        <RefreshRecommendations />
+      </div>
+
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {movies.map((movie) => (
           <Link href={`/movie/${movie.id}`} key={`movie-${movie.id}`}>
             <MovieGrid movie={movie} />
           </Link>
         ))}
-      </div>
-
-      <div className="flex justify-center my-4">
-        {/* Client component to refresh recommendations */}
-        <RefreshRecommendations />
       </div>
     </div>
   )
