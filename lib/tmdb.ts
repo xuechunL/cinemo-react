@@ -2,7 +2,7 @@
 
 import { Movie } from '@/types/movie'
 
-const tmdbBaseUrl = 'https://api.themoviedb.org/3'
+const TMDB_BASE_URL = 'https://api.themoviedb.org/3'
 
 // Define TMDB API response types
 export interface TMDBMovieResponse {
@@ -22,7 +22,7 @@ export async function fetchFromTMDB<T>(
     .map(([key, value]) => `${key}=${value}`)
     .join('&')
 
-  const url = `${tmdbBaseUrl}${endpoint}${queryString ? `?${queryString}` : ''}`
+  const url = `${TMDB_BASE_URL}${endpoint}${queryString ? `?${queryString}` : ''}`
 
   const response = await fetch(url, {
     headers: {

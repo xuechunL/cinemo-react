@@ -173,9 +173,11 @@ export default async function MoviePage({
                 Overview
               </h2>
 
-              <p className="italic text-lg text-gray-700 dark:text-gray-300 mb-4">
-                &quot;{tagline}&quot;
-              </p>
+              {tagline && (
+                <p className="italic text-lg text-gray-700 dark:text-gray-300 mb-4">
+                  &quot;{tagline}&quot;
+                </p>
+              )}
 
               <div className="flex gap-2">
                 <span className="font-bold uppercase">Language: </span>

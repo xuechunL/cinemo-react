@@ -6,13 +6,14 @@ import { Movie } from '@/types/movie'
 
 // Server component
 async function MovieRecommendationsList() {
-  // Fetch recommendations from the API route (via GET request),
-  // the server will fetch the recommendations based on the user's id
+  // Fetch recommendations from the API route (via Next.js GET request),
+  // the server will fetch the recommendations based on the user's preferences
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/movies/recommendations`,
     {
-      // Use cache: 'no-store' to ensure we get fresh data on each request - SSR
+      // For now, use cache: 'no-store' to ensure we get fresh data on each request
       // This is important since we're using random values in the API
+      // SSR (https://nextjs.org/docs/app/building-your-application/rendering/server-components#dynamic-rendering)
       cache: 'no-store',
     }
   )
