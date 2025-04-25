@@ -3,6 +3,7 @@ import MovieGrid from '@/components/features/movie-grid'
 import MovieCardSkeleton from '@/components/features/movie-grid/skeleton'
 import Link from 'next/link'
 import { Movie } from '@/types/movie'
+import RefreshRecommendations from '@/components/features/refresh-recommendations'
 
 // Server component
 async function MovieRecommendationsList() {
@@ -27,12 +28,19 @@ async function MovieRecommendationsList() {
   const movies = data.movies as Movie[]
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-      {movies.map((movie) => (
-        <Link href={`/movie/${movie.id}`} key={`movie-${movie.id}`}>
-          <MovieGrid movie={movie} />
-        </Link>
-      ))}
+    <div className="flex flex-col gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        {movies.map((movie) => (
+          <Link href={`/movie/${movie.id}`} key={`movie-${movie.id}`}>
+            <MovieGrid movie={movie} />
+          </Link>
+        ))}
+      </div>
+
+      <div className="flex justify-center my-4">
+        {/* Client component to refresh recommendations */}
+        <RefreshRecommendations />
+      </div>
     </div>
   )
 }
@@ -48,8 +56,6 @@ export default function MovieRecommendations() {
         </div>
       }
     >
-      {/* TODO: add dislike and load more button here */}
-
       {/* Server component */}
       <MovieRecommendationsList />
     </Suspense>
