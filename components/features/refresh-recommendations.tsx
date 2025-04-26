@@ -21,7 +21,7 @@ export default function RefreshRecommendations() {
       className="px-6 py-3 bg-gray-200 dark:bg-gray-800 text-gray-900 dark:text-white rounded-lg font-medium hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors flex items-center gap-2"
     >
       <Image
-        src="/refresh.svg"
+        src="/images/refresh.svg"
         alt="Refresh"
         width={20}
         height={20}

@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { Roboto, Roboto_Mono } from 'next/font/google'
 import Image from 'next/image'
 import Link from 'next/link'
-import NavLink from '@/components/features/layout/nav-link'
+import NavLink from '@/components/features/layout/header/nav-link'
 
 import '@/styles/globals.scss'
 
@@ -74,13 +74,12 @@ export default function RootLayout({
       <body
         className={`${roboto.variable} ${robotoMono.variable} antialiased flex flex-col min-h-screen`}
       >
-        {/* TODO: use a header component for user authentication in the future (e.g. user profile dropdown for sign in/out) */}
         <header className="py-6">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <nav className="flex flex-col sm:flex-row gap-4 sm:gap-0 justify-between items-center">
               <Link href="/" className="flex items-center">
                 <Image
-                  src="/logo.svg"
+                  src="/images/logo.svg"
                   alt="Cinemo Logo"
                   width={204}
                   height={40}
@@ -121,9 +120,10 @@ export default function RootLayout({
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center"
+                  title="The Movie Database"
                 >
                   <Image
-                    src="/tmdb-logo.svg"
+                    src="/images/tmdb-logo.svg"
                     alt="TMDB Logo"
                     width={56}
                     height={24}

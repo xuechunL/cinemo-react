@@ -1,19 +1,40 @@
 // middleware.ts
-import { NextRequest, NextResponse } from 'next/server'
+import { NextResponse } from 'next/server'
+import { NextRequest } from 'next/server'
 
-// TODO: check if the user is authenticated on the server side
-export function middleware(request: NextRequest) {
-  console.log('middleware request: --------------------------------')
-  console.log('cookies token:', request.cookies.get('token'))
-  // redirect unauthenticated users from protected routes
-  // TODO: make sure the token is valid in the server side
-  // if (!request.cookies.get('token')) {
-  // 	return NextResponse.redirect(new URL('/signin', request.url))
-  // }
+// List of public routes that don't require authentication
+const publicRoutes = ['/', '/home', '/signin', '/signup']
+
+export async function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl
+
+  // Allow public routes
+  if (publicRoutes.includes(pathname)) {
+    return NextResponse.next()
+  }
+
+  // Get the token from the cookie
+  const token = request.cookies.get('session')?.value
+
+  if (!token) {
+    console.log('No token found')
+    // Redirect to signin if no token
+    return NextResponse.redirect(new URL('/signin', request.url))
+  }
+
   return NextResponse.next()
 }
 
 // Specify which paths this middleware should run on
 export const config = {
-  matcher: ['/collections', '/preferences'],
+  matcher: [
+    /*
+     * Match all request paths except for the ones starting with:
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico (favicon file)
+     * - images (images, e.g. for logos, icons etc.)
+     */
+    '/((?!api|_next/static|_next/image|favicon.ico|images).*)',
+  ],
 }
