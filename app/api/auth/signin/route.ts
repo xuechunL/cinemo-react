@@ -14,8 +14,6 @@ export async function POST(request: NextRequest) {
       password
     )
 
-    console.log('userCredential', userCredential)
-
     // Get the ID token
     const idToken = await userCredential.user.getIdToken()
 

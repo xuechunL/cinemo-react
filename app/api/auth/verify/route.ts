@@ -7,15 +7,37 @@ export async function GET(request: NextRequest) {
     const token = request.cookies.get('session')?.value
 
     if (!token) {
-      // token not found
-      return NextResponse.json({ verified: false }, { status: 401 })
+      // No token found
+      return NextResponse.json(
+        { verified: false, error: 'No session token found' },
+        { status: 401 }
+      )
     }
 
     // verify token
-    await adminAuth.verifySessionCookie(token, true)
-    return NextResponse.json({ verified: true })
+    const decodedToken = await adminAuth.verifySessionCookie(token, true)
+
+    // Add additional security checks
+    if (decodedToken.auth_time < Date.now() / 1000 - 60 * 60 * 24 * 30) {
+      return NextResponse.json(
+        { verified: false, error: 'Session expired' },
+        { status: 401 }
+      )
+    }
+
+    return NextResponse.json({
+      verified: true,
+      user: {
+        uid: decodedToken.uid,
+        email: decodedToken.email,
+        // Add other user data as needed
+      },
+    })
   } catch (error) {
     console.error('Error verifying session cookie:', error)
-    return NextResponse.json({ verified: false }, { status: 401 })
+    return NextResponse.json(
+      { verified: false, error: 'Invalid session token' },
+      { status: 401 }
+    )
   }
 }

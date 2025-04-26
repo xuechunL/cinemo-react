@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { isValidEmail, isValidPassword } from '@/utils/input-validation'
 
 export const SignUpForm = () => {
   const [name, setName] = useState('')
@@ -16,6 +17,30 @@ export const SignUpForm = () => {
     setLoading(true)
 
     try {
+      if (!name) {
+        throw new Error('Please fill in the name field')
+      }
+
+      if (!email) {
+        throw new Error('Please fill in the email field')
+      }
+
+      if (!password) {
+        throw new Error('Please fill in the password field')
+      }
+
+      // Add client-side validation
+      if (!isValidEmail(email)) {
+        throw new Error('Invalid email format')
+      }
+
+      if (!isValidPassword(password)) {
+        throw new Error(
+          // 'Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character'
+          'Password must be at least 8 characters long'
+        )
+      }
+
       const response = await fetch('/api/auth/signup', {
         method: 'POST',
         headers: {
@@ -53,7 +78,8 @@ export const SignUpForm = () => {
           value={name}
           onChange={(e) => setName(e.target.value)}
           className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
-          required
+          // required
+          placeholder="John Doe"
         />
       </div>
 
@@ -63,18 +89,19 @@ export const SignUpForm = () => {
         </label>
         <input
           id="email"
-          type="email"
+          // type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
-          required
+          // required
+          placeholder="john.doe@example.com"
           autoComplete="email"
         />
       </div>
 
       <div className="flex flex-col gap-2">
         <label htmlFor="password" className="text-sm font-medium">
-          Password
+          Password (at least 8 characters long)
         </label>
         <input
           id="password"
@@ -82,13 +109,13 @@ export const SignUpForm = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
-          required
-          minLength={8}
+          // required
           autoComplete="new-password"
+          placeholder="********"
         />
       </div>
 
-      {/* TODO: preferences section (checkboxes) (optional) */}
+      {/* TODO: preferences section (optional) */}
 
       <button
         disabled={loading}

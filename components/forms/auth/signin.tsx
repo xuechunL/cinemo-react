@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { isValidEmail } from '@/utils/input-validation'
 
 export const SignInForm = () => {
   const [email, setEmail] = useState('')
@@ -15,6 +16,18 @@ export const SignInForm = () => {
     setLoading(true)
 
     try {
+      if (!email) {
+        throw new Error('Please fill in the email field')
+      }
+
+      if (!password) {
+        throw new Error('Please fill in the password field')
+      }
+
+      if (!isValidEmail(email)) {
+        throw new Error('Invalid email format')
+      }
+
       const response = await fetch('/api/auth/signin', {
         method: 'POST',
         headers: {
@@ -48,12 +61,13 @@ export const SignInForm = () => {
         </label>
         <input
           id="email"
-          type="email"
+          // type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
-          required
+          // required
           autoComplete="email"
+          placeholder="john.doe@example.com"
         />
       </div>
 
@@ -67,8 +81,9 @@ export const SignInForm = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
-          required
+          // required
           autoComplete="current-password"
+          placeholder="********"
         />
       </div>
 
