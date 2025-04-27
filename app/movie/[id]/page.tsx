@@ -4,9 +4,12 @@ import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import { Metadata } from 'next'
 import Link from 'next/link'
+import { TMDBMovieDetailsResponse, Genre, Movie } from '@/types/movie'
 
 // Shared function to fetch movie data
-async function fetchMovieData(id: string) {
+async function fetchMovieData(
+  id: string
+): Promise<TMDBMovieDetailsResponse | null> {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/movies/${id}`,
     {
@@ -19,7 +22,6 @@ async function fetchMovieData(id: string) {
   }
 
   const movie = await res.json()
-
   // Check if movie exists and has required properties
   if (!movie || !movie.id || !movie.title) {
     return null
@@ -131,7 +133,7 @@ export default async function MoviePage({
               </div>
             </div>
             <div className="flex flex-wrap gap-2 mb-4">
-              {genres.map((genre: { id: string; name: string }) => (
+              {genres.map((genre: Genre) => (
                 <span
                   key={genre.id}
                   className="px-3 py-1 bg-white/20 text-white rounded-full text-sm"
@@ -220,21 +222,19 @@ export default async function MoviePage({
                 </h3>
                 {/* TODO: add link card component here */}
                 <ul className="list-disc list-inside">
-                  {similar?.results
-                    ?.slice(0, 5)
-                    .map((movie: { id: string; title: string }) => (
-                      <li
-                        className="text-gray-700 dark:text-gray-300"
-                        key={movie.id}
+                  {similar?.results?.slice(0, 5).map((movie: Movie) => (
+                    <li
+                      className="text-gray-700 dark:text-gray-300"
+                      key={movie.id}
+                    >
+                      <Link
+                        className="hover:text-gray-900 dark:hover:text-gray-100 hover:underline"
+                        href={`/movie/${movie.id}`}
                       >
-                        <Link
-                          className="hover:text-gray-900 dark:hover:text-gray-100 hover:underline"
-                          href={`/movie/${movie.id}`}
-                        >
-                          {movie.title}
-                        </Link>
-                      </li>
-                    ))}
+                        {movie.title}
+                      </Link>
+                    </li>
+                  ))}
                 </ul>
               </div>
             </div>

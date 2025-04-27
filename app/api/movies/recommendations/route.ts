@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { Movie } from '@/types/movie'
-import { fetchFromTMDB, TMDBMovieResponse } from '@/lib/tmdb'
+import { Movie, TMDBMoviesResponse } from '@/types/movie'
+import { fetchFromTMDB } from '@/lib/tmdb'
 
 // Helper function to shuffle an array (Fisher-Yates algorithm)
 function shuffleArray<T>(array: T[]): T[] {
@@ -55,7 +55,7 @@ async function fetchDefaultRecommendations(): Promise<Movie[]> {
     const strategies = [
       // Strategy 1: Trending movies from this week
       async () => {
-        const data = await fetchFromTMDB<TMDBMovieResponse>(
+        const data = await fetchFromTMDB<TMDBMoviesResponse>(
           '/trending/movie/week',
           { page: getRandomPage() }
         )
@@ -63,14 +63,14 @@ async function fetchDefaultRecommendations(): Promise<Movie[]> {
       },
       // Strategy 2: Popular movies
       async () => {
-        const data = await fetchFromTMDB<TMDBMovieResponse>('/movie/popular', {
+        const data = await fetchFromTMDB<TMDBMoviesResponse>('/movie/popular', {
           page: getRandomPage(),
         })
         return data.results
       },
       // Strategy 3: Top rated movies
       async () => {
-        const data = await fetchFromTMDB<TMDBMovieResponse>(
+        const data = await fetchFromTMDB<TMDBMoviesResponse>(
           '/movie/top_rated',
           { page: getRandomPage() }
         )
@@ -78,7 +78,7 @@ async function fetchDefaultRecommendations(): Promise<Movie[]> {
       },
       // Strategy 4: Now playing movies
       async () => {
-        const data = await fetchFromTMDB<TMDBMovieResponse>(
+        const data = await fetchFromTMDB<TMDBMoviesResponse>(
           '/movie/now_playing',
           { page: getRandomPage() }
         )
@@ -87,10 +87,13 @@ async function fetchDefaultRecommendations(): Promise<Movie[]> {
       // Strategy 5: Movies by a random genre
       async () => {
         const genreId = getRandomGenre()
-        const data = await fetchFromTMDB<TMDBMovieResponse>('/discover/movie', {
-          with_genres: genreId,
-          page: getRandomPage(),
-        })
+        const data = await fetchFromTMDB<TMDBMoviesResponse>(
+          '/discover/movie',
+          {
+            with_genres: genreId,
+            page: getRandomPage(),
+          }
+        )
         return data.results
       },
     ]
@@ -114,7 +117,7 @@ async function fetchDefaultRecommendations(): Promise<Movie[]> {
   } catch (error) {
     console.error('Error fetching default recommendations:', error)
     // Fallback to a single API call if the combined strategy fails
-    const data = await fetchFromTMDB<TMDBMovieResponse>('/movie/popular')
+    const data = await fetchFromTMDB<TMDBMoviesResponse>('/movie/popular')
     return shuffleArray(data.results).slice(0, 20)
   }
 }
@@ -151,7 +154,7 @@ async function fetchPersonalizedRecommendations(
 
     // Fetch movies for each preferred genre
     const genrePromises = userPreferredGenres.map((genreId) =>
-      fetchFromTMDB<TMDBMovieResponse>('/discover/movie', {
+      fetchFromTMDB<TMDBMoviesResponse>('/discover/movie', {
         with_genres: genreId,
         sort_by: 'popularity.desc',
         page: (seed % 3) + 1,
@@ -159,7 +162,7 @@ async function fetchPersonalizedRecommendations(
     )
 
     // Also fetch some popular movies as a baseline
-    const popularPromise = fetchFromTMDB<TMDBMovieResponse>('/movie/popular', {
+    const popularPromise = fetchFromTMDB<TMDBMoviesResponse>('/movie/popular', {
       page: (seed % 3) + 1,
     }).then((data) => data.results)
 

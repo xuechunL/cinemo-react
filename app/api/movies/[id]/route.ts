@@ -1,4 +1,5 @@
 import { fetchFromTMDB } from '@/lib/tmdb'
+import { TMDBMovieDetailsResponse } from '@/types/movie'
 import { NextRequest, NextResponse } from 'next/server'
 
 export async function GET(
@@ -16,9 +17,12 @@ export async function GET(
     }
 
     // Fetch movie details from TMDB API
-    const movie = await fetchFromTMDB(`/movie/${id}`, {
-      append_to_response: 'credits,videos,similar',
-    })
+    const movie = await fetchFromTMDB<TMDBMovieDetailsResponse>(
+      `/movie/${id}`,
+      {
+        append_to_response: 'credits,videos,similar',
+      }
+    )
 
     return NextResponse.json(movie)
   } catch (error) {

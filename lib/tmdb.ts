@@ -1,16 +1,6 @@
 // TMDB API utils for fetching movies from TMDB
 
-import { Movie } from '@/types/movie'
-
 const TMDB_BASE_URL = 'https://api.themoviedb.org/3'
-
-// Define TMDB API response types
-export interface TMDBMovieResponse {
-  page: number
-  results: Movie[]
-  total_pages: number
-  total_results: number
-}
 
 // Utility function to make TMDB API requests
 export async function fetchFromTMDB<T>(

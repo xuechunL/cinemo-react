@@ -1,7 +1,7 @@
 // stores/authStore.ts
 import { create } from 'zustand'
 
-interface UserState {
+type UserState = {
   user: {
     id: string
     email: string

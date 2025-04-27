@@ -2,7 +2,7 @@
 import Image from 'next/image'
 import { Movie } from '@/types/movie'
 
-interface MovieGridProps {
+type MovieGridProps = {
   movie: Movie
 }
 
