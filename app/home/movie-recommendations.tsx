@@ -4,6 +4,7 @@ import MovieCardSkeleton from '@/components/features/movie-grid/skeleton'
 import Link from 'next/link'
 import { Movie } from '@/types/movie'
 import RefreshRecommendations from '@/components/features/refresh-recommendations'
+import NoMovie from './no-movie'
 
 // Server component
 async function MovieRecommendationsList() {
@@ -19,9 +20,10 @@ async function MovieRecommendationsList() {
     }
   )
 
-  // TODO: handle error properly
   if (!response.ok) {
-    throw new Error('Failed to fetch movie recommendations')
+    // throw new Error('Failed to fetch movie recommendations')
+    console.error('Failed to fetch movie recommendations')
+    return <NoMovie />
   }
 
   const data = await response.json()
