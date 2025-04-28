@@ -92,7 +92,7 @@ export default function RootLayout({
 
               <div className="flex items-center space-x-8">
                 <NavLink href="/preferences">MY PREFERENCES</NavLink>
-                <NavLink href="/collections">COLLECTIONS</NavLink>
+                <NavLink href="/collections">MY COLLECTIONS</NavLink>
               </div>
             </nav>
           </div>

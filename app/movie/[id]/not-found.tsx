@@ -1,20 +1,13 @@
 import Link from 'next/link'
-import Image from 'next/image'
+import { EmptyPlaceholder } from '@/components/ui/empty-placeholder'
 
-export default function MovieNotFound() {
+// https://nextjs.org/docs/app/getting-started/error-handling#not-found
+export default function NotFound() {
   return (
     <div className="flex flex-col items-center justify-center min-h-[70vh] px-4 text-center">
       <h1 className="text-2xl font-bold mb-4">Oops, Movie Not Found!</h1>
 
-      <div className="relative w-64 h-64 mb-8">
-        <Image
-          src="/images/movie-not-found.svg"
-          alt="Movie not found"
-          fill
-          className="object-contain"
-          priority
-        />
-      </div>
+      <EmptyPlaceholder />
 
       <p className="text-gray-600 dark:text-gray-400 mb-8 max-w-md">
         We couldn&apos;t find the movie you&apos;re looking for. It might have

@@ -31,6 +31,8 @@ async function fetchMovieData(
 }
 
 // Generate metadata for the page
+// https://nextjs.org/docs/app/building-your-application/optimizing/metadata#dynamic-metadata
+// https://nextjs.org/docs/app/building-your-application/optimizing/metadata#ordering
 export async function generateMetadata({
   params,
 }: {
@@ -80,6 +82,7 @@ export default async function MoviePage({
   const movie = await fetchMovieData(id)
 
   if (!movie) {
+    // https://nextjs.org/docs/app/api-reference/functions/not-found
     notFound()
   }
 

@@ -1,4 +1,10 @@
+import { Metadata } from 'next'
 import NoMovie from './no-movie'
+
+export const metadata: Metadata = {
+  title: 'My Collections',
+  description: 'View your collections',
+}
 
 // TODO: add collection cards here
 export default function Collections() {

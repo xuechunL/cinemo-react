@@ -3,6 +3,13 @@
 import Image from 'next/image'
 import Avatar from '@/components/ui/avatar'
 import { SignOutButton } from '@/components/features/auth/signout-button'
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'My Preferences',
+  description: 'Manage your preferences',
+}
+
 export default function Preferences() {
   return (
     <div className="flex flex-col items-center gap-6">

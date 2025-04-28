@@ -21,9 +21,7 @@ async function MovieRecommendationsList() {
   )
 
   if (!response.ok) {
-    // throw new Error('Failed to fetch movie recommendations')
-    console.error('Failed to fetch movie recommendations')
-    return <NoMovie />
+    throw new Error('Failed to fetch movie recommendations.')
   }
 
   const data = await response.json()
@@ -36,13 +34,17 @@ async function MovieRecommendationsList() {
         <RefreshRecommendations />
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {movies.map((movie) => (
-          <Link href={`/movie/${movie.id}`} key={`movie-${movie.id}`}>
-            <MovieGrid movie={movie} />
-          </Link>
-        ))}
-      </div>
+      {movies.length > 0 ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {movies.map((movie) => (
+            <Link href={`/movie/${movie.id}`} key={`movie-${movie.id}`}>
+              <MovieGrid movie={movie} />
+            </Link>
+          ))}
+        </div>
+      ) : (
+        <NoMovie />
+      )}
     </div>
   )
 }

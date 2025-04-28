@@ -1,5 +1,11 @@
 import Link from 'next/link'
 import { SignInForm } from '@/components/forms/auth/signin'
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Sign In',
+  description: 'Sign in to your account',
+}
 
 export default async function SignIn() {
   return (
