@@ -2,35 +2,45 @@ import { Suspense } from 'react'
 import MovieGrid from '@/components/features/movie-grid'
 import MovieCardSkeleton from '@/components/features/movie-grid/skeleton'
 import Link from 'next/link'
-import { Movie } from '@/types/movie'
 import RefreshRecommendations from '@/components/features/refresh-recommendations'
 import NoMovie from './no-movie'
+import {
+  TMDB_BASE_URL,
+  getRandomEndpoint,
+  removeDuplicateMovies,
+} from '@/lib/tmdb'
+import { Movie } from '@/types/movie'
+import { shuffleArray } from '@/utils/array'
 
 // Server component
 async function MovieRecommendationsList() {
-  // Fetch recommendations from the API route (via Next.js GET request),
-  // the server will fetch the recommendations based on the user's preferences
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/movies/recommendations`,
-    {
-      // For now, use cache: 'no-store' to ensure we get fresh data on each request
-      // This is important since we're using random values in the API
-      // SSR (https://nextjs.org/docs/app/building-your-application/rendering/server-components#dynamic-rendering)
-      cache: 'no-store',
-    }
-  )
+  // Get random endpoint and query
+  const { endpoint, query } = getRandomEndpoint()
+  const url = `${TMDB_BASE_URL}${endpoint}?${query}`
+  console.log('url', url)
+
+  // Fetch movies from TMDB
+  const response = await fetch(url, {
+    headers: {
+      Authorization: `Bearer ${process.env.TMDB_API_TOKEN}`,
+    },
+    // For now, use cache: 'no-store' to ensure we get fresh data on each request
+    // This is important since we're using random values in the API
+    // SSR (https://nextjs.org/docs/app/building-your-application/rendering/server-components#dynamic-rendering)
+    cache: 'no-store',
+  })
 
   if (!response.ok) {
-    throw new Error('Failed to fetch movie recommendations.')
+    throw new Error(`TMDB API Error: ${response.status} ${response.statusText}`)
   }
 
   const data = await response.json()
-  const movies = data.movies as Movie[]
+  const results = data.results as Movie[]
+  const movies = shuffleArray(removeDuplicateMovies(results)).slice(0, 20)
 
   return (
     <div className="flex flex-col gap-6">
       <div className="flex justify-center">
-        {/* Client component to refresh recommendations */}
         <RefreshRecommendations />
       </div>
 
@@ -60,7 +70,6 @@ export default function MovieRecommendations() {
         </div>
       }
     >
-      {/* Server component */}
       <MovieRecommendationsList />
     </Suspense>
   )

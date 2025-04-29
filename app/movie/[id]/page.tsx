@@ -5,29 +5,31 @@ import { notFound } from 'next/navigation'
 import { Metadata } from 'next'
 import Link from 'next/link'
 import { TMDBMovieDetailsResponse, Genre, Movie } from '@/types/movie'
+import { fetchFromTMDB } from '@/lib/tmdb'
 
 // Shared function to fetch movie data
 async function fetchMovieData(
   id: string
 ): Promise<TMDBMovieDetailsResponse | null> {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/movies/${id}`,
-    {
-      next: { revalidate: 3600 }, // Revalidate every hour - ISR
+  try {
+    // Fetch movie details from TMDB API
+    const movie = await fetchFromTMDB<TMDBMovieDetailsResponse>(
+      `/movie/${id}`,
+      {
+        append_to_response: 'credits,videos,similar',
+      }
+    )
+
+    // Check if movie exists and has required properties
+    if (!movie || !movie.id) {
+      return null
     }
-  )
 
-  if (!res.ok) {
+    return movie
+  } catch (error) {
+    console.error('Error fetching movie data:', error)
     return null
   }
-
-  const movie = await res.json()
-  // Check if movie exists and has required properties
-  if (!movie || !movie.id || !movie.title) {
-    return null
-  }
-
-  return movie
 }
 
 // Generate metadata for the page

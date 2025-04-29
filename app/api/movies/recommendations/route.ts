@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server'
 import { Movie, TMDBMoviesResponse } from '@/types/movie'
 import { fetchFromTMDB } from '@/lib/tmdb'
 
+// Archive route for now
+
 // Helper function to shuffle an array (Fisher-Yates algorithm)
 function shuffleArray<T>(array: T[]): T[] {
   const newArray = [...array]

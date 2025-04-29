@@ -2,6 +2,7 @@ import { fetchFromTMDB } from '@/lib/tmdb'
 import { TMDBMovieDetailsResponse } from '@/types/movie'
 import { NextRequest, NextResponse } from 'next/server'
 
+// Archive route for now
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
