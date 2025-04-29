@@ -109,11 +109,10 @@ export default async function MoviePage({
           <Image
             src={`https://image.tmdb.org/t/p/original${backdrop_path}`}
             alt={`${title} backdrop`}
-            fill
             // ensure the image as background is always visible
             priority
-            // https://nextjs.org/docs/pages/api-reference/components/image#sizes
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            // https://nextjs.org/docs/pages/api-reference/components/image#fill
+            fill
             className="object-cover"
           />
         ) : (
