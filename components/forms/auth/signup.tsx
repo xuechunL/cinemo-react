@@ -2,51 +2,44 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { isValidEmail, isValidPassword } from '@/utils/input-validation'
+import { z } from 'zod'
+import { signUpSchema, type SignUpFormData } from '@/utils/validations/auth'
 
 export const SignUpForm = () => {
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [error, setError] = useState('')
+  const [formData, setFormData] = useState<SignUpFormData>({
+    name: '',
+    email: '',
+    password: '',
+  })
+  const [errors, setErrors] = useState<
+    Partial<SignUpFormData> & { submitError?: string }
+  >({})
   const [loading, setLoading] = useState(false)
   const router = useRouter()
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
+    setFormData((prev) => ({ ...prev, [name]: value }))
+    // Clear error when user starts typing
+    if (errors[name as keyof SignUpFormData]) {
+      setErrors((prev) => ({ ...prev, [name]: undefined }))
+    }
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
 
     try {
-      if (!name) {
-        throw new Error('Please fill in the name field')
-      }
-
-      if (!email) {
-        throw new Error('Please fill in the email field')
-      }
-
-      if (!password) {
-        throw new Error('Please fill in the password field')
-      }
-
-      // Add client-side validation
-      if (!isValidEmail(email)) {
-        throw new Error('Invalid email format')
-      }
-
-      if (!isValidPassword(password)) {
-        throw new Error(
-          // 'Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character'
-          'Password must be at least 8 characters long'
-        )
-      }
+      // Validate form data
+      const validatedData = signUpSchema.parse(formData)
 
       const response = await fetch('/api/auth/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email, password, name }),
+        body: JSON.stringify(validatedData),
       })
 
       if (!response.ok) {
@@ -56,10 +49,19 @@ export const SignUpForm = () => {
 
       router.push('/home')
     } catch (error) {
-      if (error instanceof Error) {
-        setError(error.message)
+      if (error instanceof z.ZodError) {
+        // Convert Zod errors to a more usable format
+        const newErrors: Partial<SignUpFormData> = {}
+        error.errors.forEach((err) => {
+          if (err.path[0]) {
+            newErrors[err.path[0] as keyof SignUpFormData] = err.message
+          }
+        })
+        setErrors(newErrors)
+      } else if (error instanceof Error) {
+        setErrors({ submitError: error.message })
       } else {
-        setError('An unexpected error occurred')
+        setErrors({ submitError: 'An unexpected error occurred' })
       }
     } finally {
       setLoading(false)
@@ -68,19 +70,21 @@ export const SignUpForm = () => {
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-80">
+      {/* TODO: abstract form fields to a component */}
       <div className="flex flex-col gap-2">
         <label htmlFor="name" className="text-sm font-medium">
           Name
         </label>
         <input
           id="name"
+          name="name"
           type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          value={formData.name}
+          onChange={handleChange}
           className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
-          // required
           placeholder="John Doe"
         />
+        {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
       </div>
 
       <div className="flex flex-col gap-2">
@@ -89,14 +93,15 @@ export const SignUpForm = () => {
         </label>
         <input
           id="email"
-          // type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          name="email"
+          type="email"
+          value={formData.email}
+          onChange={handleChange}
           className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
-          // required
           placeholder="john.doe@example.com"
           autoComplete="email"
         />
+        {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
       </div>
 
       <div className="flex flex-col gap-2">
@@ -105,14 +110,17 @@ export const SignUpForm = () => {
         </label>
         <input
           id="password"
+          name="password"
           type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          value={formData.password}
+          onChange={handleChange}
           className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
-          // required
           autoComplete="new-password"
           placeholder="********"
         />
+        {errors.password && (
+          <p className="text-red-500 text-sm">{errors.password}</p>
+        )}
       </div>
 
       {/* TODO: preferences section (optional) */}
@@ -125,7 +133,9 @@ export const SignUpForm = () => {
         {loading ? 'Signing up...' : 'Sign Up'}
       </button>
 
-      {error && <p className="text-red-500">{error}</p>}
+      {errors.submitError && (
+        <p className="text-red-500 text-sm">{errors.submitError}</p>
+      )}
     </form>
   )
 }
