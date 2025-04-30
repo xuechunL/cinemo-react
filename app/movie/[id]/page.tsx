@@ -96,8 +96,8 @@ export default async function MoviePage({
     release_date,
     vote_average,
     runtime,
-    genres,
-    spoken_languages,
+    genres = [],
+    spoken_languages = [],
     tagline,
     credits,
     similar,
@@ -127,13 +127,21 @@ export default async function MoviePage({
               {title}
             </h1>
             <div className="flex items-center gap-4 text-white/80 mb-4">
-              <span>{new Date(release_date).getFullYear()}</span>
-              <span>•</span>
+              {release_date && (
+                <>
+                  <span>{new Date(release_date).getFullYear()}</span>
+                  <span>•</span>
+                </>
+              )}
               <span>{runtime} min</span>
               <span>•</span>
               <div className="flex items-center">
                 <span className="text-yellow-400 mr-1">★</span>
-                <span>{vote_average.toFixed(1)}</span>
+                {vote_average ? (
+                  <span>{vote_average.toFixed(1)}</span>
+                ) : (
+                  <span>N/A</span>
+                )}
               </div>
             </div>
             <div className="flex flex-wrap gap-2 mb-4">
@@ -219,12 +227,11 @@ export default async function MoviePage({
                 {overview}
               </p>
 
-              {/* Additional movie details can go here */}
               <div className="gap-2">
                 <h3 className="text-xl font-bold mb-4 dark:text-white">
                   Similar Movies
                 </h3>
-                {/* TODO: add link card component here */}
+                {/* TODO: change to card link component here */}
                 <ul className="list-disc list-inside">
                   {similar?.results?.slice(0, 5).map((movie: Movie) => (
                     <li

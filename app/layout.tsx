@@ -25,7 +25,6 @@ const robotoMono = Roboto_Mono({
 export const metadata: Metadata = {
   // Basic Metadata
   title: {
-    // FIXME: add a dynamic title
     template: '%s | Cinemo', // template for dynamic title
     default: 'Cinemo - Your Favorite Movies, Right Here!',
   },
