@@ -9,7 +9,7 @@ import {
   getRandomEndpoint,
   removeDuplicateMovies,
 } from '@/lib/tmdb'
-import { Movie } from '@/types/movie'
+import type { Movie } from '@/types/movie'
 import { shuffleArray } from '@/utils/array'
 
 // Server component

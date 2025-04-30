@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { Movie, TMDBMoviesResponse } from '@/types/movie'
+import type { Movie, TMDBMoviesResponse } from '@/types/movie'
 import { fetchFromTMDB } from '@/lib/tmdb'
 
 // Archive route for now

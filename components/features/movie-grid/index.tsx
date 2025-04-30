@@ -1,6 +1,6 @@
 // components/movie/MovieGrid.tsx
 import Image from 'next/image'
-import { Movie } from '@/types/movie'
+import type { Movie } from '@/types/movie'
 
 type MovieGridProps = {
   movie: Movie

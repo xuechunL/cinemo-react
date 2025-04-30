@@ -2,9 +2,9 @@
 
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
-import { Metadata } from 'next'
+import type { Metadata } from 'next'
 import Link from 'next/link'
-import { TMDBMovieDetailsResponse, Genre, Movie } from '@/types/movie'
+import type { TMDBMovieDetailsResponse, Genre, Movie } from '@/types/movie'
 import { fetchFromTMDB } from '@/lib/tmdb'
 
 // Shared function to fetch movie data

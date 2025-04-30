@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import Avatar from '@/components/ui/avatar'
 import { SignOutButton } from '@/components/features/auth/signout-button'
-import { Metadata } from 'next'
+import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'My Preferences',

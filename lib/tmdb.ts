@@ -1,6 +1,6 @@
 // TMDB API utils for fetching movies from TMDB
 
-import { Movie, TMDBMoviesResponse } from '@/types/movie'
+import type { Movie, TMDBMoviesResponse } from '@/types/movie'
 import { shuffleArray } from '@/utils/array'
 
 export const TMDB_BASE_URL = 'https://api.themoviedb.org/3'
