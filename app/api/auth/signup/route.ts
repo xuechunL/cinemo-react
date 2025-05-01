@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { type NextRequest, NextResponse } from 'next/server'
 import { adminAuth, adminDb } from '@/lib/firebase/config'
 import { auth } from '@/lib/firebase/client'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
@@ -15,11 +15,14 @@ export async function POST(request: NextRequest) {
     )
 
     // Create user document in Firestore
-    await adminDb.collection('users').doc(userCredential.user.uid).set({
+    const userData = {
       email,
       name,
       createdAt: new Date().toISOString(),
-    })
+      avatar: '',
+      preferences: {},
+    }
+    await adminDb.collection('users').doc(userCredential.user.uid).set(userData)
 
     // Get the ID token
     const idToken = await userCredential.user.getIdToken()
@@ -32,7 +35,13 @@ export async function POST(request: NextRequest) {
 
     // Set the cookie
     const response = NextResponse.json(
-      { message: 'Successfully signed up' },
+      {
+        message: 'Successfully signed up',
+        user: {
+          uid: userCredential.user.uid,
+          ...userData,
+        },
+      },
       { status: 201 }
     )
     response.cookies.set('session', sessionCookie, {

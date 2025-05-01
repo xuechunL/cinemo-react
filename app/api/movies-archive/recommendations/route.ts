@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { type NextRequest, NextResponse } from 'next/server'
 import type { Movie, TMDBMoviesResponse } from '@/types/movie'
 import { fetchFromTMDB } from '@/lib/tmdb'
 

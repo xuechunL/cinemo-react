@@ -1,6 +1,5 @@
 // middleware.ts
-import { NextResponse } from 'next/server'
-import { NextRequest } from 'next/server'
+import { type NextRequest, NextResponse } from 'next/server'
 
 // List of public routes that don't require authentication
 const publicRoutes = ['/', '/home', '/signin', '/signup']
@@ -17,7 +16,7 @@ export async function middleware(request: NextRequest) {
   const token = request.cookies.get('session')?.value
 
   if (!token) {
-    console.log('No token found')
+    console.log('Unauthorized: no token found')
     // Redirect to signin if no token
     return NextResponse.redirect(new URL('/signin', request.url))
   }
@@ -30,11 +29,12 @@ export const config = {
   matcher: [
     /*
      * Match all request paths except for the ones starting with:
+     * - api/auth (API routes)
      * - _next/static (static files)
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
      * - images (images, e.g. for logos, icons etc.)
      */
-    '/((?!api|_next/static|_next/image|favicon.ico|images).*)',
+    '/((?!api/auth|_next/static|_next/image|favicon.ico|images).*)',
   ],
 }

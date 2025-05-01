@@ -35,6 +35,35 @@ export function getRandomPage(min = 1, max = 5): number {
   return Math.floor(Math.random() * (max - min + 1)) + min
 }
 
+// TODO: Helper function to get recommended genres based on user preferences
+/**
+ const { mood, genres } = preferences
+  
+  // Map mood to genre weights
+  const moodGenreWeights = {
+    HAPPY: ['COMEDY', 'ROMANCE'],
+    SAD: ['DRAMA', 'ROMANCE'],
+    FRUSTRATED: ['ACTION', 'COMEDY'],
+    ANXIOUS: ['COMEDY', 'ROMANCE'],
+    TIRED: ['COMEDY', 'ROMANCE'],
+    BORED: ['ACTION', 'SCI-FI'],
+    EXCITED: ['ACTION', 'ADVENTURE'],
+    LONELY: ['ROMANCE', 'COMEDY'],
+    ANGRY: ['ACTION', 'THRILLER'],
+    TERRIBLE: ['COMEDY', 'ROMANCE']
+  }
+
+  // Combine user's preferred genres with mood-based genres
+  const targetGenres = new Set([
+    ...genres,
+    ...(mood ? moodGenreWeights[mood] : [])
+  ])
+
+  // Convert genre names to TMDB genre IDs
+  const genreIds = Array.from(targetGenres).map(genre => GENRE_MAP[genre])
+
+ */
+
 // Helper function to get a random genre ID
 export function getRandomGenres(count = 1): number[] {
   const popularGenres = [

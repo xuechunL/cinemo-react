@@ -1,6 +1,6 @@
 import { fetchFromTMDB } from '@/lib/tmdb'
 import type { TMDBMovieDetailsResponse } from '@/types/movie'
-import { NextRequest, NextResponse } from 'next/server'
+import { type NextRequest, NextResponse } from 'next/server'
 
 // Archive route for now
 export async function GET(

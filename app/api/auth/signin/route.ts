@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { type NextRequest, NextResponse } from 'next/server'
 import { adminAuth } from '@/lib/firebase/config'
 import { auth } from '@/lib/firebase/client'
 import { signInWithEmailAndPassword } from 'firebase/auth'
@@ -25,7 +25,13 @@ export async function POST(request: NextRequest) {
 
     // Set the cookie
     const response = NextResponse.json(
-      { message: 'Successfully signed in' },
+      {
+        message: 'Successfully signed in',
+        user: {
+          uid: userCredential.user.uid,
+          email: userCredential.user.email,
+        },
+      },
       { status: 200 }
     )
     response.cookies.set('session', sessionCookie, {

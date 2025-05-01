@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { type NextRequest, NextResponse } from 'next/server'
 import { adminAuth } from '@/lib/firebase/config'
 
 export async function GET(request: NextRequest) {
@@ -9,7 +9,7 @@ export async function GET(request: NextRequest) {
     if (!token) {
       // No token found
       return NextResponse.json(
-        { verified: false, error: 'No session token found' },
+        { verified: false, error: 'Unauthorized: no session token found' },
         { status: 401 }
       )
     }
@@ -20,7 +20,7 @@ export async function GET(request: NextRequest) {
     // Add additional security checks
     if (decodedToken.auth_time < Date.now() / 1000 - 60 * 60 * 24 * 30) {
       return NextResponse.json(
-        { verified: false, error: 'Session expired' },
+        { verified: false, error: 'Unauthorized: session expired' },
         { status: 401 }
       )
     }
@@ -36,7 +36,7 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     console.error('Error verifying session cookie:', error)
     return NextResponse.json(
-      { verified: false, error: 'Invalid session token' },
+      { verified: false, error: 'Unauthorized' },
       { status: 401 }
     )
   }

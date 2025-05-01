@@ -1,10 +1,12 @@
 'use client'
 
+import { useUserStore } from '@/store/user'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
 export const SignOutButton = () => {
   const router = useRouter()
+  const { setAuthUser } = useUserStore()
   const [loading, setLoading] = useState(false)
 
   const handleSignOut = async () => {
@@ -18,7 +20,8 @@ export const SignOutButton = () => {
         throw new Error('Sign out failed')
       }
 
-      router.push('/signin')
+      setAuthUser(null)
+      router.push('/')
     } catch (error) {
       console.error('Error signing out:', error)
     } finally {
@@ -31,9 +34,9 @@ export const SignOutButton = () => {
       type="button"
       disabled={loading}
       onClick={handleSignOut}
-      className="px-4 py-2 text-sm text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100"
+      className="font-medium px-4 py-2 text-sm text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100"
     >
-      {loading ? 'Signing out...' : 'Sign Out'}
+      Sign Out
     </button>
   )
 }
