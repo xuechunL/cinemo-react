@@ -20,8 +20,8 @@ export const SignOutButton = () => {
         throw new Error('Sign out failed')
       }
 
+      router.push('/home')
       setAuthUser(null)
-      router.push('/')
     } catch (error) {
       console.error('Error signing out:', error)
     } finally {
@@ -34,7 +34,7 @@ export const SignOutButton = () => {
       type="button"
       disabled={loading}
       onClick={handleSignOut}
-      className="font-medium px-4 py-2 text-sm text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100"
+      className="font-medium text-sm text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100"
     >
       Sign Out
     </button>

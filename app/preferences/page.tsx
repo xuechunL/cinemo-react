@@ -2,7 +2,6 @@
 
 import type { Metadata } from 'next'
 import { UserProfile } from '@/components/forms/preferences/profile'
-import { AuthProvider } from '@/components/providers/auth-provider'
 
 export const metadata: Metadata = {
   title: 'My Preferences',
@@ -10,9 +9,5 @@ export const metadata: Metadata = {
 }
 
 export default function Preferences() {
-  return (
-    <AuthProvider>
-      <UserProfile />
-    </AuthProvider>
-  )
+  return <UserProfile />
 }

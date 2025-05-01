@@ -44,8 +44,6 @@ export const SignInForm = () => {
         body: JSON.stringify(validatedData),
       })
 
-      console.log('response', response)
-
       if (!response.ok) {
         const data = await response.json()
         throw new Error(data.error || 'Sign in failed')

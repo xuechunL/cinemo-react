@@ -3,11 +3,11 @@
 
 import { useEffect } from 'react'
 import { useUserStore } from '@/store/user'
-import { useRouter } from 'next/navigation'
+// import { useRouter } from 'next/navigation'
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const { setAuthUser, setAuthLoading, authUser } = useUserStore()
-  const router = useRouter()
+  // const router = useRouter()
 
   useEffect(() => {
     // Set up Firebase auth state listener
@@ -25,12 +25,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         } else {
           // No valid session
           setAuthUser(null)
-          router.push('/signin')
+          // router.push('/signin')
         }
       } catch (error) {
         console.error('Error verifying session:', error)
         setAuthUser(null)
-        router.push('/signin')
+        // router.push('/signin')
       } finally {
         setAuthLoading(false)
       }
@@ -39,7 +39,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     if (!authUser) {
       checkAuth()
     }
-  }, [setAuthUser, setAuthLoading, router, authUser])
+  }, [setAuthUser, setAuthLoading, authUser])
 
   return children
 }

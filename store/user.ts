@@ -40,6 +40,8 @@ export const useUserStore = create<UserState>((set, get) => ({
     if (user) {
       // When auth user is set, fetch their profile
       get().fetchProfile(user.uid)
+    } else {
+      set({ profile: null, profileLoading: false, profileError: null })
     }
   },
   setAuthLoading: (loading) => set({ authLoading: loading }),

@@ -2,6 +2,7 @@ import { type NextRequest, NextResponse } from 'next/server'
 import { adminAuth, adminDb } from '@/lib/firebase/config'
 import { auth } from '@/lib/firebase/client'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
+import { FirebaseError } from 'firebase/app'
 
 export async function POST(request: NextRequest) {
   try {
@@ -54,6 +55,14 @@ export async function POST(request: NextRequest) {
     return response
   } catch (error) {
     console.error('Error signing up:', error)
+    if (error instanceof FirebaseError) {
+      if (error.code === 'auth/email-already-in-use') {
+        return NextResponse.json(
+          { error: 'Email already in use' },
+          { status: 400 }
+        )
+      }
+    }
     return NextResponse.json(
       { error: 'Failed to create account' },
       { status: 400 }
