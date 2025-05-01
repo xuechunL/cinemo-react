@@ -59,7 +59,7 @@ export const useUserStore = create<UserState>((set, get) => ({
       return
     }
 
-    set({ profileLoading: true, profileError: null })
+    set({ profileError: null })
 
     try {
       const response = await fetch(`/api/users/${authUser.uid}/profile`, {
@@ -81,7 +81,6 @@ export const useUserStore = create<UserState>((set, get) => ({
           ...get().profile!,
           preferences: data.preferences,
         } as UserProfile,
-        profileLoading: false,
       })
     } catch (error) {
       console.error('Error updating preferences:', error)
@@ -90,7 +89,6 @@ export const useUserStore = create<UserState>((set, get) => ({
           error instanceof Error
             ? error.message
             : 'Failed to update preferences',
-        profileLoading: false,
       })
     }
   },
