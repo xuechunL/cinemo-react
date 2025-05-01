@@ -4,8 +4,10 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { signInSchema, type SignInFormData } from '@/utils/validations/auth'
 import { z } from 'zod'
+import { useUserStore } from '@/store/user'
 
 export const SignInForm = () => {
+  const { setAuthUser } = useUserStore()
   const [formData, setFormData] = useState<SignInFormData>({
     email: '',
     password: '',
@@ -42,10 +44,15 @@ export const SignInForm = () => {
         body: JSON.stringify(validatedData),
       })
 
+      console.log('response', response)
+
       if (!response.ok) {
         const data = await response.json()
         throw new Error(data.error || 'Sign in failed')
       }
+
+      const data = await response.json()
+      setAuthUser(data.user)
 
       router.push('/home')
     } catch (error) {

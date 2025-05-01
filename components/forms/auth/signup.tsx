@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { z } from 'zod'
 import { signUpSchema, type SignUpFormData } from '@/utils/validations/auth'
+import { useUserStore } from '@/store/user'
 
 export const SignUpForm = () => {
   const [formData, setFormData] = useState<SignUpFormData>({
@@ -16,6 +17,7 @@ export const SignUpForm = () => {
   >({})
   const [loading, setLoading] = useState(false)
   const router = useRouter()
+  const { setAuthUser } = useUserStore()
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -47,6 +49,8 @@ export const SignUpForm = () => {
         throw new Error(data.error || 'Sign up failed')
       }
 
+      const data = await response.json()
+      setAuthUser(data.user)
       router.push('/home')
     } catch (error) {
       if (error instanceof z.ZodError) {
