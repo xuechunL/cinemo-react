@@ -10,7 +10,7 @@ import {
 } from '@/utils/enum-helpers'
 
 export function PreferencesForm() {
-  const { profile, updatePreferences } = useUserStore()
+  const { profile, updatePreferences, profileError } = useUserStore()
   const [selectedMood, setSelectedMood] = useState<Mood | null>(
     profile?.preferences?.mood || null
   )
@@ -124,6 +124,8 @@ export function PreferencesForm() {
           ))}
         </div>
       </div>
+
+      {profileError && <div className="text-red-500">{profileError}</div>}
 
       <button
         type="submit"

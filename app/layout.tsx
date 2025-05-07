@@ -2,8 +2,8 @@ import type { Metadata } from 'next'
 import { Roboto, Roboto_Mono } from 'next/font/google'
 import Image from 'next/image'
 import Link from 'next/link'
-import NavLink from '@/components/features/layout/header/nav-link'
 import { AuthProvider } from '@/components/providers/auth-provider'
+import { NavMenu } from '@/components/features/layout/header/nav-menu'
 
 import '@/styles/globals.scss'
 
@@ -91,10 +91,7 @@ export default function RootLayout({
               </Link>
 
               <AuthProvider>
-                <div className="flex items-center space-x-8">
-                  <NavLink href="/preferences">MY PREFERENCES</NavLink>
-                  <NavLink href="/collections">MY COLLECTIONS</NavLink>
-                </div>
+                <NavMenu />
               </AuthProvider>
             </nav>
           </div>

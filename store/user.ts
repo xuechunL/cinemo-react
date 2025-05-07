@@ -36,12 +36,17 @@ export const useUserStore = create<UserState>((set, get) => ({
 
   // Basic setters
   setAuthUser: (user) => {
-    set({ authUser: user })
     if (user) {
+      set({ authUser: user })
       // When auth user is set, fetch their profile
       get().fetchProfile(user.uid)
     } else {
-      set({ profile: null, profileLoading: false, profileError: null })
+      set({
+        authUser: null,
+        profile: null,
+        profileLoading: false,
+        profileError: null,
+      })
     }
   },
   setAuthLoading: (loading) => set({ authLoading: loading }),
