@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 import { useUserStore } from '@/store/user'
 import { Mood, Genre, Decade, UserPreferences } from '@/types/user'
 import {
@@ -21,6 +22,7 @@ export function PreferencesForm() {
     user?.preferences?.decades || []
   )
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [success, setSuccess] = useState(false)
 
   const handleMoodSelect = (mood: Mood) => {
     setSelectedMood(mood === selectedMood ? null : mood)
@@ -42,6 +44,7 @@ export function PreferencesForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    setSuccess(false)
     setIsSubmitting(true)
 
     try {
@@ -52,6 +55,7 @@ export function PreferencesForm() {
       }
 
       await updatePreferences(preferences)
+      setSuccess(true)
     } catch (error) {
       console.error('Error updating preferences:', error)
     } finally {
@@ -126,6 +130,17 @@ export function PreferencesForm() {
       </div>
 
       {userError && <div className="text-red-500">{userError}</div>}
+      {success && (
+        <div className="text-green-500 text-center">
+          Preferences saved successfully! 🎉
+          <br />
+          Explore{' '}
+          <Link href="/home" className="underline font-medium">
+            movies
+          </Link>{' '}
+          tailored to your taste.
+        </div>
+      )}
 
       <button
         type="submit"

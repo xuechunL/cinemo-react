@@ -8,7 +8,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const { fetchUser, user } = useUserStore()
 
   useEffect(() => {
-    console.log('user', user)
+    // console.log('user', user)
     if (!user) {
       fetchUser()
     }
