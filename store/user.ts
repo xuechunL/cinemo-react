@@ -88,7 +88,11 @@ export const useUserStore = create<UserState>((set, get) => ({
 
       if (!response.ok) {
         const error = await response.json()
-        throw new Error(error.error || 'Failed to fetch profile')
+        if (error.error.includes('Unauthorized')) {
+          throw new Error('Please sign in to fetch profile')
+        } else {
+          throw new Error(error.error || 'Failed to fetch profile')
+        }
       }
 
       const data = await response.json()
@@ -97,7 +101,7 @@ export const useUserStore = create<UserState>((set, get) => ({
         userLoading: false,
       })
     } catch (error) {
-      console.error('Error fetching profile:', error)
+      // console.error('Error fetching profile:', error)
       set({
         userError:
           error instanceof Error ? error.message : 'Failed to fetch profile',
