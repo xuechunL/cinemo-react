@@ -7,7 +7,7 @@ import { z } from 'zod'
 import { useUserStore } from '@/store/user'
 
 export const SignInForm = () => {
-  const { setAuthUser } = useUserStore()
+  const { fetchUser } = useUserStore()
   const [formData, setFormData] = useState<SignInFormData>({
     email: '',
     password: '',
@@ -49,9 +49,7 @@ export const SignInForm = () => {
         throw new Error(data.error || 'Sign in failed')
       }
 
-      const data = await response.json()
-      setAuthUser(data.user)
-
+      fetchUser()
       router.push('/home')
     } catch (error) {
       if (error instanceof z.ZodError) {

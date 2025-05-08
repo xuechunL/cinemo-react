@@ -3,6 +3,8 @@ import { adminAuth } from '@/lib/firebase/config'
 import { auth } from '@/lib/firebase/client'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 
+// TODO: refactor to use server action
+
 export async function POST(request: NextRequest) {
   try {
     const { email, password } = await request.json()

@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server'
 import { auth } from '@/lib/firebase/client'
 import { signOut } from 'firebase/auth'
 
+// TODO: refactor to use server action
+
 export async function POST() {
   try {
     // Sign out from Firebase

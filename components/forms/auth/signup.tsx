@@ -17,7 +17,7 @@ export const SignUpForm = () => {
   >({})
   const [loading, setLoading] = useState(false)
   const router = useRouter()
-  const { setAuthUser } = useUserStore()
+  const { fetchUser } = useUserStore()
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -49,8 +49,7 @@ export const SignUpForm = () => {
         throw new Error(data.error || 'Sign up failed')
       }
 
-      const data = await response.json()
-      setAuthUser(data.user)
+      fetchUser()
       router.push('/home')
     } catch (error) {
       if (error instanceof z.ZodError) {

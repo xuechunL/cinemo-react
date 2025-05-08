@@ -6,7 +6,7 @@ import { useState } from 'react'
 
 export const SignOutButton = () => {
   const router = useRouter()
-  const { setAuthUser } = useUserStore()
+  const { setUser } = useUserStore()
   const [loading, setLoading] = useState(false)
 
   const handleSignOut = async () => {
@@ -21,7 +21,7 @@ export const SignOutButton = () => {
       }
 
       router.push('/home')
-      setAuthUser(null)
+      setUser(null)
     } catch (error) {
       console.error('Error signing out:', error)
     } finally {

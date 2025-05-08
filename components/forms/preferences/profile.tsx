@@ -7,9 +7,9 @@ import Image from 'next/image'
 import { PreferencesForm } from './form'
 
 export function UserProfile() {
-  const { profile, profileLoading } = useUserStore()
+  const { user, userLoading } = useUserStore()
 
-  if (profileLoading) {
+  if (userLoading) {
     return null
   }
 
@@ -17,10 +17,10 @@ export function UserProfile() {
     <div className="flex flex-col items-center gap-6">
       <div className="flex items-center gap-2">
         <div className="h-12 w-12 rounded-full bg-gray-200">
-          {profile ? (
+          {user ? (
             <Image
-              src={profile.avatar || 'https://github.com/shadcn.png'}
-              alt={`${profile.name} avatar`}
+              src={user.avatar || 'https://github.com/shadcn.png'}
+              alt={`${user.name} avatar`}
               width={48}
               height={48}
               className="rounded-full"
@@ -30,10 +30,10 @@ export function UserProfile() {
           )}
         </div>
 
-        {profile && (
+        {user && (
           <div className="flex flex-col items-start">
             <span className="text-2xl font-bold">
-              Hi {profile.name || 'there'}!
+              Hi {user.name || 'there'}!
             </span>
             <SignOutButton />
           </div>

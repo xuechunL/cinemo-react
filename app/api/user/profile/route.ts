@@ -1,14 +1,9 @@
 import { type NextRequest, NextResponse } from 'next/server'
 import { adminAuth, adminDb } from '@/lib/firebase/config'
-import type { UserPreferences } from '@/types/user'
+import type { UserProfile } from '@/types/user'
 
-// GET /api/users/:userId/profile
-export async function GET(
-  request: NextRequest,
-  { params }: { params: Promise<{ userId: string }> }
-) {
-  const userId = (await params).userId
-
+// GET /api/user/profile
+export async function GET(request: NextRequest) {
   try {
     // Verify session
     const token = request.cookies.get('session')?.value
@@ -21,15 +16,27 @@ export async function GET(
 
     // Verify token and get user ID
     const decodedToken = await adminAuth.verifySessionCookie(token, true)
-    if (decodedToken.uid !== userId) {
+
+    // Check if session has expired
+    if (decodedToken.auth_time < Date.now() / 1000 - 60 * 60 * 24 * 30) {
       return NextResponse.json(
-        { error: 'Unauthorized: cannot access other user preferences' },
-        { status: 403 }
+        { error: 'Unauthorized: session expired' },
+        { status: 401 }
       )
     }
 
+    // if (decodedToken.uid !== userId) {
+    //   return NextResponse.json(
+    //     { error: 'Forbidden: cannot access other user preferences' },
+    //     { status: 403 }
+    //   )
+    // }
+
     // Get user profile from Firestore
-    const userDoc = await adminDb.collection('users').doc(userId).get()
+    const userDoc = await adminDb
+      .collection('users')
+      .doc(decodedToken.uid)
+      .get()
     const userData = userDoc.data()
 
     if (!userData) {
@@ -46,12 +53,8 @@ export async function GET(
   }
 }
 
-// PATCH /api/users/:userId/profile
-export async function PATCH(
-  request: NextRequest,
-  { params }: { params: Promise<{ userId: string }> }
-) {
-  const userId = (await params).userId
+// PATCH /api/user/profile
+export async function PATCH(request: NextRequest) {
   try {
     // Verify session
     const token = request.cookies.get('session')?.value
@@ -64,15 +67,23 @@ export async function PATCH(
 
     // Verify token and get user ID
     const decodedToken = await adminAuth.verifySessionCookie(token, true)
+    // Check if session has expired
+    if (decodedToken.auth_time < Date.now() / 1000 - 60 * 60 * 24 * 30) {
+      return NextResponse.json(
+        { error: 'Unauthorized: session expired' },
+        { status: 401 }
+      )
+    }
+    // Get and validate request body
+    const profile: Partial<UserProfile> = await request.json()
+    const userId = profile.uid
+
     if (decodedToken.uid !== userId) {
       return NextResponse.json(
-        { error: 'Unauthorized: cannot update other user preferences' },
+        { error: 'Forbidden: cannot update other user preferences' },
         { status: 403 }
       )
     }
-
-    // Get and validate request body
-    const preferences: UserPreferences = await request.json()
 
     // Update user preferences in Firestore
     await adminDb
@@ -80,7 +91,7 @@ export async function PATCH(
       .doc(userId)
       .update({
         preferences: {
-          ...preferences,
+          ...profile.preferences,
           lastUpdated: new Date().toISOString(),
         },
       })
@@ -90,6 +101,8 @@ export async function PATCH(
     const userData = userDoc.data()
 
     return NextResponse.json({
+      message: 'Preferences updated successfully',
+      uid: userId,
       preferences: userData?.preferences || {},
     })
   } catch (error) {

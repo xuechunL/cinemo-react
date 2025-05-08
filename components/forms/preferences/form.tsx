@@ -10,15 +10,15 @@ import {
 } from '@/utils/enum-helpers'
 
 export function PreferencesForm() {
-  const { profile, updatePreferences, profileError } = useUserStore()
+  const { user, updatePreferences, userError } = useUserStore()
   const [selectedMood, setSelectedMood] = useState<Mood | null>(
-    profile?.preferences?.mood || null
+    user?.preferences?.mood || null
   )
   const [selectedGenres, setSelectedGenres] = useState<Genre[]>(
-    profile?.preferences?.genres || []
+    user?.preferences?.genres || []
   )
   const [selectedDecades, setSelectedDecades] = useState<Decade[]>(
-    profile?.preferences?.decades || []
+    user?.preferences?.decades || []
   )
   const [isSubmitting, setIsSubmitting] = useState(false)
 
@@ -125,7 +125,7 @@ export function PreferencesForm() {
         </div>
       </div>
 
-      {profileError && <div className="text-red-500">{profileError}</div>}
+      {userError && <div className="text-red-500">{userError}</div>}
 
       <button
         type="submit"

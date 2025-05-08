@@ -4,6 +4,7 @@ import { auth } from '@/lib/firebase/client'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { FirebaseError } from 'firebase/app'
 
+// TODO: refactor to use server action
 export async function POST(request: NextRequest) {
   try {
     const { email, password, name } = await request.json()
@@ -17,6 +18,7 @@ export async function POST(request: NextRequest) {
 
     // Create user document in Firestore
     const userData = {
+      uid: userCredential.user.uid,
       email,
       name,
       createdAt: new Date().toISOString(),
@@ -40,7 +42,10 @@ export async function POST(request: NextRequest) {
         message: 'Successfully signed up',
         user: {
           uid: userCredential.user.uid,
-          ...userData,
+          email,
+          name,
+          createdAt: new Date().toISOString(),
+          avatar: '',
         },
       },
       { status: 201 }

@@ -4,13 +4,13 @@ import { useUserStore } from '@/store/user'
 import NavLink from './nav-link'
 
 export function NavMenu() {
-  const { authUser, authLoading } = useUserStore()
+  const { user, userLoading } = useUserStore()
 
-  if (authLoading) {
+  if (userLoading) {
     return null
   }
 
-  if (!authUser) {
+  if (!user) {
     return (
       <div className="flex items-center space-x-8 transition-opacity duration-300">
         <NavLink href="/signin">SIGN IN</NavLink>
