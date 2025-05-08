@@ -55,7 +55,10 @@ export function PreferencesForm() {
       }
 
       await updatePreferences(preferences)
-      setSuccess(true)
+      // TODO: Handle error and success messages properly
+      if (!userError) {
+        setSuccess(true)
+      }
     } catch (error) {
       console.error('Error updating preferences:', error)
     } finally {
@@ -129,8 +132,9 @@ export function PreferencesForm() {
         </div>
       </div>
 
+      {/* TODO: Error and success messages UI */}
       {userError && <div className="text-red-500">{userError}</div>}
-      {success && (
+      {!userError && success && (
         <div className="text-green-500 text-center">
           Preferences saved successfully! 🎉
           <br />
