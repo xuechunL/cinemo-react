@@ -21,7 +21,7 @@ export async function GET(request: NextRequest) {
     console.error('API Error:', error)
     if (error instanceof AuthError) {
       return NextResponse.json(
-        { error: error.message },
+        { error: `AuthError: ${error.message}` },
         { status: error.status }
       )
     }
@@ -73,6 +73,12 @@ export async function PATCH(request: NextRequest) {
     })
   } catch (error) {
     console.error('Error updating preferences:', error)
+    if (error instanceof AuthError) {
+      return NextResponse.json(
+        { error: `AuthError: ${error.message}` },
+        { status: error.status }
+      )
+    }
     return NextResponse.json(
       { error: 'Failed to update preferences' },
       { status: 500 }

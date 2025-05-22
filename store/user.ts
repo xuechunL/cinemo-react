@@ -54,7 +54,8 @@ export const useUserStore = create<UserState>((set, get) => ({
 
       if (!response.ok) {
         const error = await response.json()
-        if (error.error.includes('Unauthorized')) {
+
+        if (error.error.includes('AuthError')) {
           throw new Error('Please sign in to update preferences')
         } else {
           throw new Error(error.error || 'Failed to update preferences')
@@ -88,7 +89,8 @@ export const useUserStore = create<UserState>((set, get) => ({
 
       if (!response.ok) {
         const error = await response.json()
-        if (error.error.includes('Unauthorized')) {
+
+        if (error.error.includes('AuthError')) {
           throw new Error('Please sign in to fetch profile')
         } else {
           throw new Error(error.error || 'Failed to fetch profile')
