@@ -1,42 +1,15 @@
 import { type NextRequest, NextResponse } from 'next/server'
-import { adminAuth, adminDb } from '@/lib/firebase/config'
+import { adminDb } from '@/lib/firebase/config'
 import type { UserProfile } from '@/types/user'
+import { authService, AuthError } from '@/lib/services/auth'
 
 // GET /api/user/profile
 export async function GET(request: NextRequest) {
   try {
-    // Verify session
-    const token = request.cookies.get('session')?.value
-    if (!token) {
-      return NextResponse.json(
-        { error: 'Unauthorized: no session token found' },
-        { status: 401 }
-      )
-    }
-
-    // Verify token and get user ID
-    const decodedToken = await adminAuth.verifySessionCookie(token, true)
-
-    // Check if session has expired
-    if (decodedToken.auth_time < Date.now() / 1000 - 60 * 60 * 24 * 30) {
-      return NextResponse.json(
-        { error: 'Unauthorized: session expired' },
-        { status: 401 }
-      )
-    }
-
-    // if (decodedToken.uid !== userId) {
-    //   return NextResponse.json(
-    //     { error: 'Forbidden: cannot access other user preferences' },
-    //     { status: 403 }
-    //   )
-    // }
-
+    const user = await authService.verifySessionToken(request)
+    console.log('user', user)
     // Get user profile from Firestore
-    const userDoc = await adminDb
-      .collection('users')
-      .doc(decodedToken.uid)
-      .get()
+    const userDoc = await adminDb.collection('users').doc(user.id).get()
     const userData = userDoc.data()
 
     if (!userData) {
@@ -45,7 +18,14 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json(userData)
   } catch (error) {
-    console.error('Error fetching profile:', error)
+    console.error('API Error:', error)
+    if (error instanceof AuthError) {
+      return NextResponse.json(
+        { error: error.message },
+        { status: error.status }
+      )
+    }
+
     return NextResponse.json(
       { error: 'Failed to fetch profile' },
       { status: 500 }
@@ -57,28 +37,14 @@ export async function GET(request: NextRequest) {
 export async function PATCH(request: NextRequest) {
   try {
     // Verify session
-    const token = request.cookies.get('session')?.value
-    if (!token) {
-      return NextResponse.json(
-        { error: 'Unauthorized: no session token found' },
-        { status: 401 }
-      )
-    }
+    //
+    const user = await authService.verifySessionToken(request)
 
-    // Verify token and get user ID
-    const decodedToken = await adminAuth.verifySessionCookie(token, true)
-    // Check if session has expired
-    if (decodedToken.auth_time < Date.now() / 1000 - 60 * 60 * 24 * 30) {
-      return NextResponse.json(
-        { error: 'Unauthorized: session expired' },
-        { status: 401 }
-      )
-    }
     // Get and validate request body
     const profile: Partial<UserProfile> = await request.json()
     const userId = profile.uid
 
-    if (decodedToken.uid !== userId) {
+    if (user.id !== userId) {
       return NextResponse.json(
         { error: 'Forbidden: cannot update other user preferences' },
         { status: 403 }

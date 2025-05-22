@@ -26,7 +26,7 @@ async function MovieRecommendationsList() {
     },
     // For now, use cache: 'no-store' to ensure we get fresh data on each request
     // This is important since we're using random values in the API
-    // SSR (https://nextjs.org/docs/app/building-your-application/rendering/server-components#dynamic-rendering)
+    // SSR (https://nextjs.org/docs/app/api-reference/functions/fetch#optionscache)
     cache: 'no-store',
   })
 

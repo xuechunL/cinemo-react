@@ -3,8 +3,10 @@ import { adminAuth, adminDb } from '@/lib/firebase/config'
 import { auth } from '@/lib/firebase/client'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { FirebaseError } from 'firebase/app'
+import { SESSION_EXPIRATION_TIME } from '@/lib/services/auth'
 
 // TODO: refactor to use server action
+// POST /api/auth/signup
 export async function POST(request: NextRequest) {
   try {
     const { email, password, name } = await request.json()
@@ -31,7 +33,7 @@ export async function POST(request: NextRequest) {
     const idToken = await userCredential.user.getIdToken()
 
     // Create a session cookie
-    const expiresIn = 60 * 60 * 24 * 5 * 1000 // 5 days
+    const expiresIn = SESSION_EXPIRATION_TIME * 1000
     const sessionCookie = await adminAuth.createSessionCookie(idToken, {
       expiresIn,
     })

@@ -2,9 +2,10 @@ import { type NextRequest, NextResponse } from 'next/server'
 import { adminAuth } from '@/lib/firebase/config'
 import { auth } from '@/lib/firebase/client'
 import { signInWithEmailAndPassword } from 'firebase/auth'
+import { SESSION_EXPIRATION_TIME } from '@/lib/services/auth'
 
 // TODO: refactor to use server action
-
+// POST /api/auth/signin
 export async function POST(request: NextRequest) {
   try {
     const { email, password } = await request.json()
@@ -20,7 +21,7 @@ export async function POST(request: NextRequest) {
     const idToken = await userCredential.user.getIdToken()
 
     // Create a session cookie
-    const expiresIn = 60 * 60 * 24 * 5 * 1000 // 5 days
+    const expiresIn = SESSION_EXPIRATION_TIME * 1000
     const sessionCookie = await adminAuth.createSessionCookie(idToken, {
       expiresIn,
     })

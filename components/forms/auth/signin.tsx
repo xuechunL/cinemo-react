@@ -50,7 +50,9 @@ export const SignInForm = () => {
       }
 
       fetchUser()
-      router.push('/home')
+      // redirect to the page the user was on before signing in
+      const from = new URLSearchParams(window.location.search).get('from')
+      router.push(from || '/home')
     } catch (error) {
       if (error instanceof z.ZodError) {
         // Convert Zod errors to a more usable format
