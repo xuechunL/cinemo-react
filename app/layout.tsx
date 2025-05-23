@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { Roboto, Roboto_Mono } from 'next/font/google'
 import Image from 'next/image'
 import Link from 'next/link'
-import { AuthProvider } from '@/components/providers/auth-provider'
+import { UserProvider } from '@/components/providers/user-provider'
 import { NavMenu } from '@/components/features/layout/header/nav-menu'
 
 import '@/styles/globals.scss'
@@ -90,9 +90,9 @@ export default function RootLayout({
                 />
               </Link>
 
-              <AuthProvider>
+              <UserProvider>
                 <NavMenu />
-              </AuthProvider>
+              </UserProvider>
             </nav>
           </div>
         </header>
